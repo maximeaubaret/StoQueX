@@ -1,0 +1,356 @@
+<html><head>
+<meta name="AUTHOR" content="Samir MEDJIAH">
+<meta name="CHANGEDBY" content="Samir MEDJIAH">
+<meta name="DESCRIPTION" content="RE 203 Projet Réseaux 2013">
+<meta name="KEYWORDS" content="Samir MEDJIAH, LaBRI, ENSEIRB, CNRS, IPB, Bordeaux,  WSN, WMSN, GEAMS, AGEM, ORION, DTN, P2P, Routing, Simulation">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="Generator" content="Microsoft Word 14 (filtered)">
+<title>PG217 - Projet Web</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Texte de bulles Car";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+span.TextedebullesCar
+	{mso-style-name:"Texte de bulles Car";
+	mso-style-link:"Texte de bulles";
+	font-family:"Tahoma","sans-serif";}
+.MsoChpDefault
+	{font-family:"Calibri","sans-serif";}
+.MsoPapDefault
+	{margin-bottom:10.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang="FR" link="blue" vlink="purple">
+
+<div class="WordSection1">
+
+<p class="MsoNormal" style="text-align:center" align="center"><b><span style="font-size:14.0pt;line-height:115%" lang="EN-US">[PG 217] Projet Web: Stock Quotes
+Explorer (StoQuEx)</span></b></p>
+
+<p class="MsoNormal"><span lang="EN-US">&nbsp;</span></p>
+
+<p class="MsoNormal" style="text-align:justify"><span style="font-size:12.0pt;
+line-height:115%">Le but de ce projet est de concevoir et de développer un
+explorateur d'actions boursières en utilisant une base de données contenant
+l'historique des données EoD (<i>End of Day</i>) des actions boursières composant
+le fameux indice S&amp;P 500. Cet indice regroupe les 500 grandes sociétés cotées
+sur les bourses américaines.</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><span style="font-size:12.0pt;line-height:115%">Les données EoD sont
+un ensemble d'informations résumant les performances d'une action durant une
+journée, il contient :</span></p>
+
+<p class="MsoListParagraphCxSpFirst" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">La valeur de
+l'action à l'ouverture de la bourse</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">La valeur la plus
+élevée de l'action durant la journée</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">La valeur la plus
+basse de l'action durant la journée</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">La valeur de
+l'action à la fermeture de la bourse</span></p>
+
+<p class="MsoListParagraphCxSpLast" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Le volume échangé
+en nombre d'unité de cette action durant la journée.</span></p>
+
+<p class="MsoNormal" style="text-align:justify"><span style="font-size:12.0pt;
+line-height:115%">La base de données contient les données couvrant la période
+allant de 01/01/2000 jusqu'au 05/04/2013:</span></p>
+
+<p class="MsoListParagraphCxSpFirst" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Fichier des EoD (<a href="http://www.labri.fr/perso/medjiah/PG217/quotes.csv.zip">quotes.csv.zip</a> ou <a href="http://www.labri.fr/perso/medjiah/PG217/quotes.xml.zip">quotes.xml.zip</a>)</span></p>
+
+<p class="MsoListParagraphCxSpLast" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Fichier des
+Symboles (<a href="http://www.labri.fr/perso/medjiah/PG217/symbols.csv.zip">symbols.csv.zip</a>)</span></p>
+
+<p class="MsoNormal" style="text-align:justify"><span style="font-size:12.0pt;
+line-height:115%">Il vous est demandé de développer une application web (site
+web) pour explorer l'ensemble des valeurs des différentes actions. Plus
+précisément, il vous est demandé de :</span></p>
+
+<p class="MsoListParagraphCxSpFirst" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Développer une
+interface (page) pour afficher des informations génériques sur une société
+donnée : </span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Nom complet, </span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Secteur d'activité, </span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Symbol, </span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Place de cotation, </span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Date de la première valeur dans la
+base de données,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Date de la dernière valeur dans la
+base de données,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Évolution de l'action durant toute la
+période,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Nombre de journées clôturés en
+vert/rouge,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Nombre de journées ou l'action a fini
+en haut/bas du palmarès, </span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">...</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Développer une
+interface (page) pour afficher l'évolution d'une action durant une période de
+temps:</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">En dessinant le graphe de la valeur
+de l'action durant cette période,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">En dessinant le graphe des volumes
+échangés durant cette période.</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Développer une
+interface (page) pour afficher, pour une certaine journée:</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Le palmarès des actions qui ont fini
+dans le vert,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Le palmarès des actions qui ont fini
+dans le rouge,</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="margin-left:72.0pt;text-align:justify;
+text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%;font-family:
+Wingdings">§<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span style="font-size:12.0pt;line-height:115%">Le palmarès des actions selon le
+volume échangé,</span></p>
+
+<p class="MsoListParagraphCxSpLast" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Développer une
+interface (page) pour afficher des informations générales sur l'indice S&amp;P
+500 en dessinant le graphe de la valeur durant une période de temps. (on
+adoptera comme valeur de l'indice la moyenne des performances des différentes
+actions)</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify"><b><i><u><span style="font-size:12.0pt;line-height:115%">Remarques</span></u></i></b></p>
+
+<p class="MsoListParagraphCxSpFirst" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">On utilisera une
+base de données MySQL pour stocker les différentes données.</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">On utilisera le
+langage PHP pour les différents scripts côté serveur.</span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Les différentes
+interfaces sont dynamiques. Chaque interface doit permettre à l'utilisateur
+d'actualiser les données de la page sans la recharger depuis le serveur web. On
+utilisera à cet effet la technologie AJAX.</span></p>
+
+<p class="MsoListParagraphCxSpLast" style="text-align:justify;text-indent:-18.0pt"><span style="font-size:12.0pt;line-height:115%">—<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12.0pt;line-height:115%">Pour visualiser
+les données reçues sous dorme d'XML, il est recommandé d'utiliser des feuilles
+de style XSLT.</span></p>
+
+<p class="MsoNormal" style="text-align:justify"><b><i><u><span style="font-size:12.0pt;line-height:115%" lang="EN-US">Exemples d'interfaces</span></u></i></b></p>
+
+<table class="MsoTableGrid" style="width:609.2pt;border-collapse:collapse;border:none" border="0" cellpadding="0" cellspacing="0" width="812">
+ <tbody><tr style="height:425.3pt">
+  <td style="width:169.7pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:425.3pt" valign="top" width="226">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+  normal"><span style="font-size:12.0pt">(I1) Interface pour l'affichage d'informations
+  sur une action sur une période paramétrable.</span></p>
+  </td>
+  <td style="width:439.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:425.3pt" valign="top" width="586">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:center;line-height:normal" align="center"><span style="font-size:12.0pt"><img id="Image 2" src="PG217%20-%20Projet%20Web_fichiers/image001.jpg" border="0" height="522" width="393"></span></p>
+  </td>
+ </tr>
+ <tr style="height:305.95pt">
+  <td style="width:169.7pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:305.95pt" valign="top" width="226">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+  normal"><span style="font-size:12.0pt">(I2) Informations concernant une
+  action pour une certaine journée paramétrable.</span></p>
+  </td>
+  <td style="width:439.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:305.95pt" valign="top" width="586">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:center;line-height:normal" align="center"><img src="PG217%20-%20Projet%20Web_fichiers/image002.png" border="0" height="402" width="391"></p>
+  </td>
+ </tr>
+ <tr style="height:360.85pt">
+  <td style="width:169.7pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:360.85pt" valign="top" width="226">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+  normal"><span style="font-size:12.0pt">(I3) Pour une certaine journée, affichage
+  de plusieurs actions sous forme de listes : Vert, Rouge, Volume.</span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+  normal"><span style="font-size:12.0pt">&nbsp;</span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+  normal"><span style="font-size:12.0pt">On peut envisager de switcher
+  d'interface en cliquant sur le symbole d'une action (pour aller vers I2)</span></p>
+  </td>
+  <td style="width:439.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:360.85pt" valign="top" width="586">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:center;line-height:normal" align="center"><img src="PG217%20-%20Projet%20Web_fichiers/image003.jpg" border="0" height="440" width="533"></p>
+  </td>
+ </tr>
+ <tr style="height:171.6pt">
+  <td style="width:169.7pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:171.6pt" valign="top" width="226">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+  normal"><span style="font-size:12.0pt">(I4) affichage de la performance de
+  l'indice S&amp;P 500 sur une période donnée.</span></p>
+  </td>
+  <td style="width:439.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:171.6pt" valign="top" width="586">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:center;line-height:normal" align="center"><img src="PG217%20-%20Projet%20Web_fichiers/image004.jpg" border="0" height="206" width="300"></p>
+  </td>
+ </tr>
+</tbody></table>
+
+<p class="MsoNormal" style="text-align:justify"><span style="font-size:12.0pt;
+line-height:115%">&nbsp;</span></p>
+
+</div>
+
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=7717241; 
+var sc_invisible=1; 
+var sc_security="e00e06fe"; 
+</script>
+<script type="text/javascript" src="PG217%20-%20Projet%20Web_fichiers/counter.js"></script>
+<noscript><div class="statcounter"><a title="tumblr
+statistics" href="http://statcounter.com/tumblr/"
+target="_blank"><img class="statcounter"
+src="http://c.statcounter.com/7717241/0/e00e06fe/1/"
+alt="tumblr statistics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+
+
+
+</body></html>
