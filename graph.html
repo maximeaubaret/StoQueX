@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Graph</title>
+<!-- Bootstrap -->
+<meta http-equiv="Content-Type" Content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<style>
+body {
+  padding-top: 60px;
+}
+</style>
+<link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="container">
+  <div id="graph" class="span12"></div>
+</div>
+<!-- Bootstrap -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/highstock.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<script>
+$(document).ready(function () {
+  $.getJSON('api/quotes.php?symbol=AAPL', function (data) {
+
+    points = [];
+    i = 0;
+    $.each (data, function (key, r) {
+      points.push([moment(r.Date).valueOf(), parseFloat(r.Open), parseFloat(r.High), parseFloat(r.Low), parseFloat(r.Close)]);
+      i++;
+    });
+
+    $('#graph').highcharts('StockChart', {
+      rangeSelector : {
+        selected: 1
+      },
+      credits: {
+        enabled: false
+      },
+      series : [{
+        name : 'AAPL',
+        data : points,
+        type: 'candlestick',
+        tooltip: {
+          valueDecimals: 2
+        }
+      }]
+    });
+  });
+});
+</script>
+</body>
+</html>
+
