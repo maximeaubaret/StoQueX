@@ -46,16 +46,16 @@ if (isset($_GET['from']) && isset($_GET['to'])) {
 // Prepare SQL Statement
 
 if (isset($date)) {
-  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol and Date = :date');
+  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol and Date = :date ORDER BY Date');
   $stmt->bindParam(':date', $date);
 }
 elseif (isset($from) && isset($to)) {
-  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol and Date >= :from && Date <= :to');
+  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol and Date >= :from && Date <= :to ORDER BY Date');
   $stmt->bindParam(':from', $from);
   $stmt->bindParam(':to', $to);
 }
 else {
-  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol');
+  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol ORDER BY Date');
 }
 
 
