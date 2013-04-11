@@ -13,7 +13,6 @@ body {
 <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
-
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -25,10 +24,10 @@ body {
           <li class=""><a href="#" data-toggle="tab">Interface I3</a></li>  
           <li class=""><a href="#" data-toggle="tab">Interface I4</a></li> 
         </ul>
-        <form class="navbar-search pull-left" action="#">  
-          <input type="text" class="search-query" placeholder="Search">  
-        </form> 
-        <p><a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Click me!</a></p>
+        <div class="input-append navbar-search pull-right">
+          <input class="span2" id="search" type="text">
+          <button class="btn" type="button">Search</button>
+        </div>
       </div>
     </div>
   </div>
@@ -147,9 +146,15 @@ body {
     </div>
   </div>
 </div>
-
 <!-- Bootstrap -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function () {
+  $('#search').typeahead({
+    source: ["Apple", "Apple Inc.", "iTunes", "iPad", "iPhone", "iMac", "Microsoft"]
+  });
+});
+</script>
 </body>
 </html>
