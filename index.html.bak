@@ -66,21 +66,28 @@ body {
               <tr>
                 <td>Name:</td>
                 <td>Amazon</td>
+                
               </tr>
               <tr>
                 <td>Symbol:</td>
                 <td>AMZN</td>
+                
+                
               </tr>
               <tr>
                 <td>Sector:</td>
                 <td>Consumer Discretionary</td>
+                
               </tr>
               <tr>
                 <td>Place:</td>
-                <td>NASDAQ</td>                
+                <td>NASDAQ</td>
+                
               </tr>
             </tbody>
-          </table>                    
+          </table>
+          
+          
         </div>
         <div class="tab-pane" id="i2">
           <h1>Interface I2</h1>
