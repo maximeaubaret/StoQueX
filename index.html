@@ -10,47 +10,33 @@
 body {
   padding-top: 60px;
 }
-</style> <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"
-
-      media="screen">
+</style> 
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container"> <a class="brand" href="#">StoQuEx</a>
+        <div class="container"> <a class="brand" href="index.html">StoQuEx</a>
           <div class="container">
             <ul class="nav">
-              <li class="active"><a href="#i1" data-toggle="tab">Interface I1</a></li>
-              <li class=""><a href="#i2" data-toggle="tab">Interface I2</a></li>
-              <li class=""><a href="#i3" data-toggle="tab">Interface I3</a></li>
-              <li class=""><a href="#i4" data-toggle="tab">Interface I4</a></li>
+              <li class="active"><a href="#i1" data-toggle="tab">Home</a></li>
+              <li class=""><a href="#i3" data-toggle="tab">Company details</a></li>
             </ul>
-            <div class="input-append navbar-search pull-right"> <input class="span2"
-
-                id="search" type="text"> <button class="btn" type="button">Search</button>
+            <div class="input-append navbar-search pull-right"> 
+            	<input class="span3" id="search" type="text" placeholder="Select a company ..."/> 
+            	<button class="btn" type="button" >Search</button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div id="myModal" class="modal hide fade">
-      <div class="modal-header"> <button type="button" class="close" data-dismiss="modal"
-
-          aria-hidden="true">x</button>
-        <h3>Fuck me, I'm famous!</h3>
-      </div>
-      <div class="modal-body">
-        <p>That's right! You heard me!</p>
-      </div>
-      <div class="modal-footer"> <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     </div>
     <div class="container">
       <div id="my-tab-content2" class="tab-content">
         <div class="tab-pane active" id="i1">
           <h1>Interface I1</h1>
+          <div class="row">
+          <div class="span8">
           <form>
-            <fieldset> <legend>Select a Compagny</legend> <label>Compagny name</label>
+            <fieldset> <legend>Select a Company</legend> <label>Company name</label>
               <select>
                 <option>1</option>
                 <option>2</option>
@@ -60,27 +46,30 @@ body {
               </select>
             </fieldset>
           </form>
-          <legend>Compagny informations</legend>
+          </div>
+          <div class="span4">
           <table class="table table-bordered">
             <tbody>
               <tr>
-                <td>Name:</td>
+                <td>Name</td>
                 <td>Amazon</td>
               </tr>
               <tr>
-                <td>Symbol:</td>
+                <td>Symbol</td>
                 <td>AMZN</td>
               </tr>
               <tr>
-                <td>Sector:</td>
+                <td>Sector</td>
                 <td>Consumer Discretionary</td>
               </tr>
               <tr>
-                <td>Place:</td>
+                <td>Place</td>
                 <td>NASDAQ</td>                
               </tr>
             </tbody>
-          </table>                    
+          </table> 
+         </div> 
+         </div>                   
         </div>
         <div class="tab-pane" id="i2">
           <h1>Interface I2</h1>
