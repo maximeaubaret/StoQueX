@@ -75,6 +75,10 @@ body {
     <!-- Home -->
     <div class="tab-pane active" id="home">
       <div class="page-header">
+        <h1>S&P 500</h1>
+      </div>
+      <div id="graph"></div>
+      <div class="page-header">
         <h1>Palmares</h1>
       </div>
       <div class="row">
@@ -170,7 +174,7 @@ body {
 
     <!-- Company Details -->
     <div class="tab-pane" id="company-details">
-      <h1>Company details</h1>
+      <h1>Apple</h1>
       <div class="row">
         <div class="span8">
           <form action="#">
@@ -218,10 +222,42 @@ body {
 <!-- Bootstrap -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/highstock.js"></script>
+<script src="assets/js/moment.min.js"></script>
 <script>
 $(document).ready(function () {
   $('#search').typeahead({
     source: ["Apple", "Apple Inc.", "iTunes", "iPad", "iPhone", "iMac", "Microsoft"]
+  });
+
+  $.getJSON('api/quotes.php?symbol=AAPL', function (data) {
+
+    points = [];
+    i = 0;
+    $.each (data, function (key, r) {
+      points.push([moment(r.Date).valueOf(), parseFloat(r.Open), parseFloat(r.High), parseFloat(r.Low), parseFloat(r.Close)]);
+      i++;
+    });
+
+    $('#graph').highcharts('StockChart', {
+      rangeSelector : {
+        selected: 1
+      },
+      navigator: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series : [{
+        name : 'AAPL',
+        data : points,
+        type: 'line',
+        tooltip: {
+          valueDecimals: 2
+        }
+      }]
+    });
   });
 });
 </script>
