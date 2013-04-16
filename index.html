@@ -55,11 +55,11 @@ body {
       </div>
       <div class="container">
         <ul class="nav">
-          <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+          <li class="active"><a href="#palmares" data-toggle="tab">Palmares</a></li>
           <li class=""><a href="#company-details" data-toggle="tab">Company details</a></li>
         </ul>
         <div class="input-append navbar-search pull-right"> 
-          <input class="span2" id="search" type="text" placeholder="Find a company..."/> 
+          <input class="span2" id="search" type="text" placeholder="Find a company..." autocomplete="off"/> 
           <div class="btn">
             <i class="icon-search"></i>
           </div>
@@ -72,12 +72,8 @@ body {
 <div class="container">
   <div class="tab-content">
 
-    <!-- Home -->
-    <div class="tab-pane active" id="home">
-      <div class="page-header">
-        <h1>S&P 500</h1>
-      </div>
-      <div id="graph"></div>
+    <!-- Palmares -->
+    <div class="tab-pane active" id="palmares">
       <div class="page-header">
         <h1>Palmares</h1>
       </div>
@@ -224,42 +220,6 @@ body {
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/highstock.js"></script>
 <script src="assets/js/moment.min.js"></script>
-<script>
-$(document).ready(function () {
-  $('#search').typeahead({
-    source: ["Apple", "Apple Inc.", "iTunes", "iPad", "iPhone", "iMac", "Microsoft"]
-  });
-
-  $.getJSON('api/quotes.php?symbol=AAPL', function (data) {
-
-    points = [];
-    i = 0;
-    $.each (data, function (key, r) {
-      points.push([moment(r.Date).valueOf(), parseFloat(r.Open), parseFloat(r.High), parseFloat(r.Low), parseFloat(r.Close)]);
-      i++;
-    });
-
-    $('#graph').highcharts('StockChart', {
-      rangeSelector : {
-        selected: 1
-      },
-      navigator: {
-        enabled: false
-      },
-      credits: {
-        enabled: false
-      },
-      series : [{
-        name : 'AAPL',
-        data : points,
-        type: 'line',
-        tooltip: {
-          valueDecimals: 2
-        }
-      }]
-    });
-  });
-});
-</script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>
