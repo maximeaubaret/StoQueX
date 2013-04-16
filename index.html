@@ -10,6 +10,27 @@
 body {
   padding-top: 60px;
 }
+
+.navbar-logo {
+  height: 40px;
+
+  margin-left: -35px;
+  padding-left: 35px;
+
+  background: url(assets/img/logo.png) no-repeat;
+  background-position: left center;
+  background-size: 30px;
+}
+
+.navbar-logo:hover {
+  background: url(assets/img/logo-black.png) no-repeat;
+  background-position: left center;
+  background-size: 30px;
+}
+
+.navbar-logo:hover a {
+  color: black;
+}
 </style> 
 </head>
 <body>
@@ -17,7 +38,12 @@ body {
 <!-- Navbar -->
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-    <div class="container"> <a class="brand" href="index.html">StoQuEx</a>
+    <div class="container"> 
+      <div class="navbar-logo pull-left">
+        <a class="brand" href="index.html">
+          StoQuEx
+        </a>
+      </div>
       <div class="container">
         <ul class="nav">
           <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
