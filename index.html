@@ -31,6 +31,17 @@ body {
 .navbar-logo:hover a {
   color: black;
 }
+
+#search {
+  -moz-transition:width 500ms, height 500ms, background-color 500ms, -moz-transform 500ms;
+  -webkit-transition:width 500ms, height 500ms, background-color 500ms, -webkit-transform 500ms;
+  -o-transition:width 500ms, height 500ms, background-color 500ms, -o-transform 500ms;
+  transition:width 500ms, height 500ms, background-color 500ms, transform 500ms;
+}
+
+#search:focus {
+  width: 200px;
+}
 </style> 
 </head>
 <body>
@@ -40,9 +51,7 @@ body {
   <div class="navbar-inner">
     <div class="container"> 
       <div class="navbar-logo pull-left">
-        <a class="brand" href="index.html">
-          StoQuEx
-        </a>
+        <a class="brand" href="index.html"> StoQuEx </a>
       </div>
       <div class="container">
         <ul class="nav">
@@ -65,44 +74,40 @@ body {
 
     <!-- Home -->
     <div class="tab-pane active" id="home">
-      <h1>Palmares</h1>
-      <div id="content">
-        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-          <li class="active"><a href="#green" data-toggle="tab">Green</a></li>
-          <li><a href="#red" data-toggle="tab">Red</a></li>
-          <li><a href="#volume" data-toggle="tab">Volume</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="green">
-            <h2>Green</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Ticker</th>
-                  <th>Closing value</th>
-                  <th>Performance</th>
-                </tr>
-              </thead>
-              <tbody>
+      <div class="page-header">
+        <h1>Palmares</h1>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <h2>Green</h2>
+          <table class="table">
+            <thead>
               <tr>
-                <td>ABC1</td>
-                <td>123,45</td>
-                <td>+31%</td>
+                <th>Ticker</th>
+                <th>Closing value</th>
+                <th>Performance</th>
               </tr>
-              <tr>
-                <td>ABC2</td>
-                <td>123,45</td>
-                <td>+30%</td>
-              </tr>
-              <tr>
-                <td>ABC3</td>
-                <td>123,45</td>
-                <td>+29%</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="tab-pane" id="red">
+            </thead>
+            <tbody>
+            <tr>
+              <td>ABC1</td>
+              <td>123,45</td>
+              <td>+31%</td>
+            </tr>
+            <tr>
+              <td>ABC2</td>
+              <td>123,45</td>
+              <td>+30%</td>
+            </tr>
+            <tr>
+              <td>ABC3</td>
+              <td>123,45</td>
+              <td>+29%</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="span4">
             <h2>Red</h2>
             <table class="table">
               <thead>
@@ -130,8 +135,8 @@ body {
               </tr>
               </tbody>
             </table>
-          </div>
-          <div class="tab-pane" id="volume">
+        </div>
+        <div class="span4">
             <h2>Volume</h2>
             <table class="table">
               <thead>
@@ -159,7 +164,6 @@ body {
               </tr>
               </tbody>
             </table>
-          </div>
         </div>
       </div>
     </div>
