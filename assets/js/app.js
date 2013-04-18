@@ -6,95 +6,130 @@
  * @author Alexandre Toni <alexandre@particleslab.com>
  */
 
-var app = {
-  companies: []
-};
+var App = function () {
+  this.companies = [];
 
-var appInit = function () {
+  this.setup = function () {
+    var self = this;
 
-  // Fetch companies
-  $.getJSON('api/symbols.php', function (data) {
-    app.companies = data;
+    // Setting up autocomplete search bar
+    this.fetchCompanies(function () {
+      var source = $.map (self.companies, function (c) {
+        return c.symbol  + " - " + c.company;
+      });
 
-    searchInit();
-  });
+      $('#search').typeahead({source: source});
+    }); 
 
-  graph();
-  graphPane();
-};
+    this.companyDetail("AAPL");
+  };
 
-var searchInit = function () {
-  var source = $.map (app.companies, function (c) {
-    return c.symbol  + " - " + c.company;
-  });
 
-  $('#search').typeahead({
-    source: source 
-  });
-};
+  this.companyDetail = function (companySymbol) {
+    var self = this;
+    this.fetchQuotes (companySymbol, "lasts", function (data) {
+      var quotes = self.companyDetail_parseQuotes(data);
+      var polyjsdata = polyjs.data(quotes.polyData);
 
-var graph = function () {
-  $.getJSON('api/quotes.php?symbol=AAPL&date=lasts', function (data) {
+      var spec = {
+        layers: [{
+          data: polyjsdata,
+          type: 'line',
+          x: 'Date',
+          y: 'Close',
+          size: {'const': 3}
+        },
+        {
+          data: polyjsdata,
+          type: 'point',
+          x: 'Date',
+          y: 'Close',
+          size: {'const': 4}
+        }],
+        guides: {
+          y: {
+            min: quotes.minimumClose - ((quotes.maximumClose - quotes.minimumClose) / 5),
+            max: quotes.maximumClose + ((quotes.maximumClose - quotes.minimumClose) / 5)
+          }
+        },
+        dom: 'chart',
+        width: 620,
+        height: 400
+      };
 
-    polyData =  {
-      'Date': [],
-      'Open': [],
-      'Close': []
-    };
-
-    graphMin = graphMax = data[0].close;
-    $.each (data, function (key, r) {
-      if (r.close > graphMax) graphMax = parseFloat(r.close);
-      if (r.close < graphMin) graphMin = parseFloat(r.close);
-
-      polyData['Date'].push(r.date);
-      polyData['Open'].push(r.open);
-      polyData['Close'].push(r.close);
+      polyjs.chart(spec);
+      $("#chart .loader").remove();
     });
-    marge = (graphMax - graphMin) / 5;
-    graphMax += marge;
-    graphMin -= marge;
+  };
 
-    var polyjsdata = polyjs.data(polyData)
-    var spec = {
-      layers: [{
-        data: polyjsdata,
-        type: 'line',
-        x: 'Date',
-        y: 'Close',
-        size: {'const': 3}
-      },
-      {
-        data: polyjsdata,
-        type: 'point',
-        x: 'Date',
-        y: 'Close',
-        size: {'const': 4}
-      }],
-      guides: {
-        y: {
-          min: graphMin,
-          max: graphMax 
-        }
-      },
-      dom: 'chart',
-      width: 620,
-      height: 400
+
+  this.fetchCompanies = function (callback) {
+    var self = this;
+    // Drawing graph
+    $.getJSON('api/symbols.php', function (data) {
+      self.companies = data;
+      if (callback != undefined) callback(data);
+    });
+
+    // Pane
+    var pickers = {
+      language: 'us',
+      pickTime: false
+    }
+    $('#from-picker').datetimepicker(pickers);
+    $('#to-picker').datetimepicker(pickers);
+  };
+
+  this.fetchQuotes = function (symbol, from, to, cb) {
+    var url = 'api/quotes.php?symbol=' + symbol;
+
+    // Searching for a date range
+    if (typeof cb === 'function') {
+      url += '&from=' + from + '&to=' + to;
+      callback = cb;
+    }
+    // Searching for a date
+    else if (typeof to === 'function') {
+      url += '&date=' + from;
+      callback = to;
+    }
+    // Searching for all quotes
+    else if (typeof from === 'function')  {
+      callback = from;
     }
 
-    polyjs.chart(spec);
+    $.getJSON(url, callback);
+  };
 
-    $("#chart .loader").remove();
-  });
-};
 
-var graphPane = function () {
-  var pickers = {
-    language: 'us',
-    pickTime: false
-  }
-  $('#from-picker').datetimepicker(pickers);
-  $('#to-picker').datetimepicker(pickers);
-};
+  this.companyDetail_parseQuotes = function (data) {
+    var r = {
+      polyData: {
+        'Date': [],
+        'Open': [],
+        'Close': []
+      },
+      minimumClose: null,
+      maximumClose: null
+    };
 
-$(document).ready(appInit);
+    if (data.length > 0) {
+      r.minimumClose = r.maximumClose = data[0].close;
+      $.each (data, function (key, q) {
+        if (q.close > r.maximumClose) r.maximumClose = parseFloat(q.close);
+        if (q.close < r.minimumClose) r.minimumClose = parseFloat(q.close);
+
+        r.polyData['Date'].push(q.date);
+        r.polyData['Open'].push(q.open);
+        r.polyData['Close'].push(q.close);
+      });
+    }
+
+    return r;
+  };
+
+
+  this.setup();
+}
+
+$(document).ready (new App());
