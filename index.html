@@ -6,6 +6,7 @@
 <!-- Bootstrap -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <style>
 body {
   padding-top: 60px;
@@ -42,6 +43,28 @@ body {
 #search:focus {
   width: 200px;
 }
+
+.company-card {
+  margin-top: 42px;
+}
+
+.company-card .name{
+  color: rgb(150,150,150);
+  background: rgb(249,249,249);
+}
+
+.company-card .value {
+  font-weight: bold;
+}
+
+.graph-details {
+  margin-top: 42px;
+}
+
+.loader {
+  background: url(assets/img/ajax-loader.gif) no-repeat;
+  background-position: center center;
+}
 </style> 
 </head>
 <body>
@@ -51,7 +74,7 @@ body {
   <div class="navbar-inner">
     <div class="container"> 
       <div class="navbar-logo pull-left">
-        <a class="brand" href="/"> StoQuEx </a>
+        <a class="brand" href="/">StoQuEx</a>
       </div>
       <div class="container">
         <ul class="nav">
@@ -73,7 +96,7 @@ body {
   <div class="tab-content">
 
     <!-- Palmares -->
-    <div class="tab-pane active" id="palmares">
+    <div class="tab-pane" id="palmares">
       <div class="page-header">
         <h1>Palmares</h1>
       </div>
@@ -169,56 +192,105 @@ body {
     </div>
 
     <!-- Company Details -->
-    <div class="tab-pane" id="company-details">
-      <h1>Apple</h1>
+    <div class="tab-pane active" id="company-details">
       <div class="row">
-        <div class="span8">
-          <form action="#">
-            <fieldset> 
-              <legend>Select a Company</legend> 
-              <label>Company name</label>
-              <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </fieldset>
-          </form>
+        <div class="span12">
+          <div class="page-header">
+            <h1>Apple</h1>
+          </div>
         </div>
-
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">...</a></li>
+        <li><a href="#">...</a></li>
+      </ul>
+      <div class="row">
+        <div id="chart" class="span8">
+          <div class="span8 loader" style="height: 300px;"></div>
+        </div>
         <div class="span4">
-          <table class="table table-bordered">
+          <div class="well">
+            <form>
+              <fieldset>
+                <label>Select a date range:</label>
+                <div id="from-picker" class="input-prepend">
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                  </span>
+                  <input data-format="MM/dd/yyyy" type="text" placeholder="From date..."></input>
+                </div>
+                <div id="to-picker" class="input-prepend">
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                  </span>
+                  <input data-format="MM/dd/yyyy" type="text" placeholder="To date..."></input>
+                </div>
+                <button class="btn">Update</button>
+              </fieldset>
+            </form>
+          </div>
+        
+          <table class="table table-bordered graph-details">
             <tbody>
             <tr>
-              <td>Name</td>
-              <td>Amazon</td>
+              <td class="name">Performance</td>
+              <td class="value">+213%</td>
             </tr>
             <tr>
-              <td>Symbol</td>
-              <td>AMZN</td>
+              <td class="name">Open</td>
+              <td class="value">200.4</td>
             </tr>
             <tr>
-              <td>Sector</td>
-              <td>Consumer Discretionary</td>
+              <td class="name">High</td>
+              <td class="value">210.8</td>                
             </tr>
             <tr>
-              <td>Place</td>
-              <td>NASDAQ</td>                
+              <td class="name">Low</td>
+              <td class="value">200.4</td>                
+            </tr>
+            <tr>
+              <td class="name">Close</td>
+              <td class="value">210.8</td>                
+            </tr>
+            <tr>
+              <td class="name">Volume</td>
+              <td class="value">4018204</td>                
+            </tr>
+            </tbody>
+          </table> 
+        </div>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <table class="table table-bordered company-card">
+            <tbody>
+            <tr>
+              <td class="name">Symbol</td>
+              <td class="value company-symbol">AMZN</td>
+            </tr>
+            <tr>
+              <td class="name">Sector</td>
+              <td class="value company-sector">Consumer Discretionary</td>
+            </tr>
+            <tr>
+              <td class="name">Place</td>
+              <td class="value company-place">NASDAQ</td>                
             </tr>
             </tbody>
           </table> 
         </div> 
       </div>                   
-    </div>
   </div>
 </div>
 
 <!-- Bootstrap -->
 <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/underscore-min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/highstock.js"></script>
+<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="assets/js/raphael-min.js"></script>
+<script src="assets/js/polychart2.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>

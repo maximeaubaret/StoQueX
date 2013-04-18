@@ -7,7 +7,7 @@ if (isset($_GET['symbol'])) {
 }
 
 if (isset($symbol)) {
-  $stmt = $db->prepare('SELECT * FROM Symbols WHERE symbol = :symbol ORDER BY symbol');
+  $stmt = $db->prepare('SELECT * FROM Symbols AS s JOIN (SELECT symbol FROM Quotes GROUP BY symbol) AS q ON s.symbol = q.symbol');
   $stmt->bindParam(':symbol', $symbol);
 }
 else {
