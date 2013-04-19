@@ -97,7 +97,7 @@ body {
   <div class="tab-content">
 
     <!-- Palmares -->
-    <div class="tab-pane" id="palmares">
+    <div class="tab-pane active" id="palmares">
       <div class="page-header">
         <h1>Palmares</h1>
       </div>
@@ -193,7 +193,7 @@ body {
     </div>
 
     <!-- Company Details -->
-    <div class="tab-pane active" id="company-details">
+    <div class="tab-pane" id="company-details">
       <div class="row">
         <div class="span12">
           <div class="page-header">
@@ -201,31 +201,26 @@ body {
           </div>
         </div>
       </div>
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">...</a></li>
-        <li><a href="#">...</a></li>
-      </ul>
       <div class="row">
         <div id="chart" class="span8">
           <div class="span8 loader" style="height: 300px;"></div>
         </div>
         <div class="span4">
           <div class="well">
-            <form>
+            <form action="#">
               <fieldset>
                 <label>Select a date range:</label>
                 <div id="from-picker" class="input-prepend">
                   <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                   </span>
-                  <input data-format="MM/dd/yyyy" type="text" placeholder="From date..."></input>
+                  <input data-format="MM/dd/yyyy" type="text" placeholder="From date..."/>
                 </div>
                 <div id="to-picker" class="input-prepend">
                   <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                   </span>
-                  <input data-format="MM/dd/yyyy" type="text" placeholder="To date..."></input>
+                  <input data-format="MM/dd/yyyy" type="text" placeholder="To date..."/>
                 </div>
                 <button class="btn">Update</button>
               </fieldset>
