@@ -147,7 +147,7 @@ var App = function () {
         r.polyData['Low'].push(q.low);
         r.polyData['Volume'].push(q.volume);
         r.polyData['Close'].push(q.close);
-        r.polyData['Performance'].push(parseFloat(((q.close / q.open) - 1) * 100));
+        r.polyData['Performance'].push(Math.floor(parseFloat(((q.close / q.open) - 1) * 10000)) / 100);
       });
     }
 
