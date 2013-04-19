@@ -57,7 +57,19 @@ var App = function () {
         height: 400
       };
 
-      polyjs.chart(spec);
+      var chart = polyjs.chart(spec);
+      chart.addHandler(function (type, obj, event, graph) {
+        if (type == "click") {
+          $(".graph-details .quote-date").text(moment(obj.evtData.Date.in[0] * 1000).format());
+          $(".graph-details .quote-open").text(obj.evtData.Open.in[0]);
+          $(".graph-details .quote-close").text(obj.evtData.Close.in[0]);
+          $(".graph-details .quote-high").text(obj.evtData.High.in[0]);
+          $(".graph-details .quote-low").text(obj.evtData.Low.in[0]);
+          $(".graph-details .quote-volume").text(obj.evtData.Volume.in[0]);
+          $(".graph-details .quote-performance").text(obj.evtData.Performance.in[0]);
+        }
+      });
+
       $("#chart .loader").remove();
     });
   };
@@ -106,7 +118,13 @@ var App = function () {
     var r = {
       polyData: {
         'Date': [],
+        'Performance': [],
         'Open': [],
+        'Close': [],
+        'Open': [],
+        'High': [],
+        'Low': [],
+        'Volume': [],
         'Close': []
       },
       minimumClose: null,
@@ -121,7 +139,11 @@ var App = function () {
 
         r.polyData['Date'].push(q.date);
         r.polyData['Open'].push(q.open);
+        r.polyData['High'].push(q.high);
+        r.polyData['Low'].push(q.low);
+        r.polyData['Volume'].push(q.volume);
         r.polyData['Close'].push(q.close);
+        r.polyData['Performance'].push(parseFloat(((q.close / q.open) - 1) * 100));
       });
     }
 
