@@ -63,7 +63,7 @@ var App = function () {
           var r = obj.evtData;
 
           if (r != undefined) {
-            $(".graph-details .quote-date").text(moment(r.Date.in[0] * 1000).format());
+            $(".graph-details .quote-date").text(moment(r.Date.in[0] * 1000).format("YYYY-MM-DD"));
             $(".graph-details .quote-open").text(r.Open.in[0]);
             $(".graph-details .quote-close").text(r.Close.in[0]);
             $(".graph-details .quote-high").text(r.High.in[0]);
