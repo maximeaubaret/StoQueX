@@ -59,14 +59,18 @@ var App = function () {
 
       var chart = polyjs.chart(spec);
       chart.addHandler(function (type, obj, event, graph) {
-        if (type == "click") {
-          $(".graph-details .quote-date").text(moment(obj.evtData.Date.in[0] * 1000).format());
-          $(".graph-details .quote-open").text(obj.evtData.Open.in[0]);
-          $(".graph-details .quote-close").text(obj.evtData.Close.in[0]);
-          $(".graph-details .quote-high").text(obj.evtData.High.in[0]);
-          $(".graph-details .quote-low").text(obj.evtData.Low.in[0]);
-          $(".graph-details .quote-volume").text(obj.evtData.Volume.in[0]);
-          $(".graph-details .quote-performance").text(obj.evtData.Performance.in[0]);
+        if (type == "mover") {
+          var r = obj.evtData;
+
+          if (r != undefined) {
+            $(".graph-details .quote-date").text(moment(r.Date.in[0] * 1000).format());
+            $(".graph-details .quote-open").text(r.Open.in[0]);
+            $(".graph-details .quote-close").text(r.Close.in[0]);
+            $(".graph-details .quote-high").text(r.High.in[0]);
+            $(".graph-details .quote-low").text(r.Low.in[0]);
+            $(".graph-details .quote-volume").text(r.Volume.in[0]);
+            $(".graph-details .quote-performance").text(r.Performance.in[0]);
+          }
         }
       });
 
