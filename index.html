@@ -45,6 +45,45 @@ body {
   width: 200px;
 }
 
+.company-header {
+  border-top: solid 2px rgb(200,200,200);
+  border-bottom: solid 2px rgb(200,200,200);
+  margin-top: 5px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.company-header h1 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 16px;
+}
+
+.company-header .quote {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.company-header .performance {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.company-header .bad {
+  color: red;
+}
+
+.company-header .good {
+  color: green;
+}
+
+.section-header {
+  border-bottom: solid 2px gray;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
 .company-card {
   margin-top: 42px;
 }
@@ -56,10 +95,6 @@ body {
 
 .company-card .value {
   font-weight: bold;
-}
-
-.graph-details {
-  margin-top: 42px;
 }
 
 .loader {
@@ -95,7 +130,6 @@ body {
 
 <div class="container">
   <div class="tab-content">
-
     <!-- Palmares -->
     <div class="tab-pane" id="palmares">
       <div class="page-header">
@@ -196,43 +230,41 @@ body {
     <div class="tab-pane active" id="company-details">
       <div class="row">
         <div class="span12">
-          <div class="page-header">
-            <h1>Apple</h1>
+          <div class="company-header">
+            <h1>Apple Inc. (AAPL)</h1>
+            <span class="quote">390.53</span>
+            <span class="performance bad">-1.52 (-0.39%)</span>
+            <span class="muted">
+              Sector: Consumer Discretionary - Place: NASDAQ
+            </span>
           </div>
         </div>
       </div>
       <div class="row">
-        <div id="chart" class="span8">
-          <div class="span8 loader" style="height: 300px;"></div>
+        <div class="span12"> 
+          <div class="section-header">
+            Day performance
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <form action="#">
+            <fieldset>
+              <label>Select a date:</label>
+              <div id="date-picker" class="input-prepend">
+                <span class="add-on">
+                  <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
+                </span>
+                <input data-format="MM/dd/yyyy" type="text" placeholder="Date..."/>
+              </div>
+              <button class="btn btn-small">Update</button>
+            </fieldset>
+          </form>
         </div>
         <div class="span4">
-          <div class="well">
-            <form action="#">
-              <fieldset>
-                <label>Select a date range:</label>
-                <div id="from-picker" class="input-prepend">
-                  <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
-                  </span>
-                  <input data-format="MM/dd/yyyy" type="text" placeholder="From date..."/>
-                </div>
-                <div id="to-picker" class="input-prepend">
-                  <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
-                  </span>
-                  <input data-format="MM/dd/yyyy" type="text" placeholder="To date..."/>
-                </div>
-                <button class="btn">Update</button>
-              </fieldset>
-            </form>
-          </div>
-
-          <table class="table table-bordered graph-details">
+          <table class="table table-bordered">
             <tbody>
-            <tr>
-              <td class="name">Date</td>
-              <td class="value quote-date">+213%</td>
-            </tr>
             <tr>
               <td class="name">Performance</td>
               <td class="value quote-performance">+213%</td>
@@ -242,16 +274,22 @@ body {
               <td class="value quote-open">200.4</td>
             </tr>
             <tr>
+              <td class="name">Close</td>
+              <td class="value quote-close">210.8</td>                
+            </tr>
+            </tbody>
+          </table> 
+        </div>
+        <div class="span4">
+          <table class="table table-bordered">
+            <tbody>
+            <tr>
               <td class="name">High</td>
               <td class="value quote-high">210.8</td>                
             </tr>
             <tr>
               <td class="name">Low</td>
               <td class="value quote-low">200.4</td>                
-            </tr>
-            <tr>
-              <td class="name">Close</td>
-              <td class="value quote-close">210.8</td>                
             </tr>
             <tr>
               <td class="name">Volume</td>
@@ -262,25 +300,72 @@ body {
         </div>
       </div>
       <div class="row">
+        <div class="span12">
+          <div class="section-header">
+            Date range performance
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="span4">
-          <table class="table table-bordered company-card">
+          <form action="#">
+            <fieldset>
+              <label>Select a date range:</label>
+              <div id="from-picker" class="input-prepend">
+                <span class="add-on">
+                  <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
+                </span>
+                <input data-format="MM/dd/yyyy" type="text" placeholder="From date..."/>
+              </div>
+              <div id="to-picker" class="input-prepend">
+                <span class="add-on">
+                  <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
+                </span>
+                <input data-format="MM/dd/yyyy" type="text" placeholder="To date..."/>
+              </div>
+              <button class="btn btn-small">Update</button>
+            </fieldset>
+          </form>
+        </div>
+        <div class="span4">
+          <div id="close-chart">
+            <div class="loader" style="height: 200px;"></div>
+          </div>
+          <table class="table table-bordered">
             <tbody>
             <tr>
-              <td class="name">Symbol</td>
-              <td class="value company-symbol">AMZN</td>
+              <td class="name">Performance</td>
+              <td class="value quote-performance">+213%</td>
             </tr>
             <tr>
-              <td class="name">Sector</td>
-              <td class="value company-sector">Consumer Discretionary</td>
+              <td class="name">Number of green days</td>
+              <td class="value quote-open">200</td>
             </tr>
             <tr>
-              <td class="name">Place</td>
-              <td class="value company-place">NASDAQ</td>                
+              <td class="name">Number of red days</td>
+              <td class="value quote-close">148</td>                
             </tr>
             </tbody>
           </table> 
-        </div> 
-      </div>                   
+        </div>
+        <div class="span4">
+          <div id="volume-chart">
+            <div class="loader" style="height: 200px;"></div>
+          </div>
+          <table class="table table-bordered">
+            <tbody>
+            <tr>
+              <td class="name">First Company</td>
+              <td class="value quote-high">12</td>                
+            </tr>
+            <tr>
+              <td class="name">Last Company</td>
+              <td class="value quote-low">4</td>                
+            </tr>
+            </tbody>
+          </table> 
+        </div>
+      </div>
     </div>
   </div>
 </div>

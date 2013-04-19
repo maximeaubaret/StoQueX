@@ -31,50 +31,66 @@ var App = function () {
       var quotes = self.companyDetail_parseQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
 
-      var spec = {
+      var specCloseChart = {
         layers: [{
           data: polyjsdata,
           type: 'line',
           x: 'Date',
           y: 'Close',
-          size: {'const': 3}
+          size: {'const': 2}
         },
         {
           data: polyjsdata,
-          type: 'point',
+          type: 'area',
           x: 'Date',
           y: 'Close',
-          size: {'const': 4}
+          size: {'const': 2},
+          opacity: {'const': 0.2}
         }],
         guides: {
+          x: {
+            title: "",
+            renderGrid: true
+          },
           y: {
+            title: "",
+            renderGrid: true,
             min: quotes.minimumClose - ((quotes.maximumClose - quotes.minimumClose) / 5),
             max: quotes.maximumClose + ((quotes.maximumClose - quotes.minimumClose) / 5)
           }
         },
-        dom: 'chart',
-        width: 620,
-        height: 400
+        dom: 'close-chart',
+        width: 300,
+        height: 200,
+        paddingTop: -30
       };
 
-      var chart = polyjs.chart(spec);
-      chart.addHandler(function (type, obj, event, graph) {
-        if (type == "mover") {
-          var r = obj.evtData;
-
-          if (r != undefined) {
-            $(".graph-details .quote-date").text(moment(r.Date.in[0] * 1000).format("YYYY-MM-DD"));
-            $(".graph-details .quote-open").text(r.Open.in[0]);
-            $(".graph-details .quote-close").text(r.Close.in[0]);
-            $(".graph-details .quote-high").text(r.High.in[0]);
-            $(".graph-details .quote-low").text(r.Low.in[0]);
-            $(".graph-details .quote-volume").text(r.Volume.in[0]);
-            $(".graph-details .quote-performance").text(r.Performance.in[0]);
+      var specVolumeChart = {
+        layers: [{
+          data: polyjsdata,
+          tooltip: "",
+          type: 'bar',
+          x: 'bin(Date, day)',
+          y: 'Volume'
+        }],
+        guides: {
+          x: {
+            title: ""
+          },
+          y: {
+            title: "",
           }
-        }
-      });
+        },
+        dom: 'volume-chart',
+        width: 300,
+        height: 200,
+        paddingTop: -30
+      };
 
-      $("#chart .loader").remove();
+      var closeChart = polyjs.chart(specCloseChart);
+      var volumeChart = polyjs.chart(specVolumeChart);
+      $("#close-chart .loader").remove();
+      $("#volume-chart .loader").remove();
     });
   };
 
@@ -92,6 +108,7 @@ var App = function () {
       language: 'us',
       pickTime: false
     }
+    $('#date-picker').datetimepicker(pickers);
     $('#from-picker').datetimepicker(pickers);
     $('#to-picker').datetimepicker(pickers);
   };
