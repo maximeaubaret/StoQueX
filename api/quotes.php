@@ -46,7 +46,7 @@ if (isset($_GET['from']) && isset($_GET['to'])) {
 // Prepare SQL Statement
 
 if (isset($date) && $date == "lasts") {
-  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol ORDER BY Date DESC LIMIT 30');
+  $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol ORDER BY Date DESC LIMIT 60');
 }
 elseif (isset($date)) {
   $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol and Date = :date ORDER BY Date');

@@ -56,44 +56,55 @@ body {
 .company-header h1 {
   margin: 0px;
   padding: 0px;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .company-header .quote {
-  font-size: 30px;
+  font-size: 34px;
   font-weight: bold;
+  margin-right: 5px;
 }
 
 .company-header .performance {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 24px;
+  margin-right: 5px;
 }
 
 .company-header .bad {
   color: red;
+  background: url(assets/img/arrow-red.png) no-repeat;
+  padding-left: 20px;
+  background-size: 20px;
+  background-position: center left;
 }
 
 .company-header .good {
   color: green;
+  background: url(assets/img/arrow-green.png) no-repeat;
+  padding-left: 20px;
+  background-size: 20px;
+  background-position: center left;
+}
+
+.company-header .date {
+  font-size: 15px;
+  margin-right: 5px;
 }
 
 .section-header {
   border-bottom: solid 2px gray;
   margin-top: 15px;
   margin-bottom: 15px;
+  padding-bottom: 5px;
   font-weight: bold;
 }
 
-.company-card {
-  margin-top: 42px;
-}
-
-.company-card .name{
+.table .name{
   color: rgb(150,150,150);
   background: rgb(249,249,249);
 }
 
-.company-card .value {
+.table .value {
   font-weight: bold;
 }
 
@@ -233,9 +244,10 @@ body {
           <div class="company-header">
             <h1>Apple Inc. (AAPL)</h1>
             <span class="quote">390.53</span>
-            <span class="performance bad">-1.52 (-0.39%)</span>
+            <span class="performance good">1.52 (0.39%)</span>
+            <span class="date">Apr. 15</span>
             <span class="muted">
-              Sector: Consumer Discretionary - Place: NASDAQ
+              | Sector: Consumer Discretionary - Place: NASDAQ
             </span>
           </div>
         </div>
@@ -256,7 +268,7 @@ body {
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                 </span>
-                <input data-format="MM/dd/yyyy" type="text" placeholder="Date..."/>
+                <input data-format="yyyy-mm-dd" type="text" placeholder="Date..."/>
               </div>
               <button class="btn btn-small">Update</button>
             </fieldset>
@@ -284,16 +296,12 @@ body {
           <table class="table table-bordered">
             <tbody>
             <tr>
-              <td class="name">High</td>
-              <td class="value quote-high">210.8</td>                
-            </tr>
-            <tr>
-              <td class="name">Low</td>
-              <td class="value quote-low">200.4</td>                
+              <td class="name">Range</td>
+              <td class="value quote-high">210.8 - 984.24</td>
             </tr>
             <tr>
               <td class="name">Volume</td>
-              <td class="value quote-volume">4018204</td>                
+              <td class="value quote-volume">4,018,204</td>                
             </tr>
             </tbody>
           </table> 
@@ -315,13 +323,13 @@ body {
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                 </span>
-                <input data-format="MM/dd/yyyy" type="text" placeholder="From date..."/>
+                <input data-format="yyyy-mm-dd" type="text" placeholder="From date..."/>
               </div>
               <div id="to-picker" class="input-prepend">
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                 </span>
-                <input data-format="MM/dd/yyyy" type="text" placeholder="To date..."/>
+                <input data-format="yyyy-mm-dd" type="text" placeholder="To date..."/>
               </div>
               <button class="btn btn-small">Update</button>
             </fieldset>
@@ -355,6 +363,10 @@ body {
           <table class="table table-bordered">
             <tbody>
             <tr>
+              <td class="name">Range</td>
+              <td class="value quote-high">210.8 - 984.24</td>
+            </tr>
+            <tr>
               <td class="name">First Company</td>
               <td class="value quote-high">12</td>                
             </tr>
@@ -378,6 +390,7 @@ body {
 <script src="assets/js/raphael-min.js"></script>
 <script src="assets/js/polychart2.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
+<script src="assets/js/helper.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
