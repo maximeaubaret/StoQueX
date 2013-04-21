@@ -7,31 +7,102 @@
  */
 
 var App = function () {
-  this.companies = [];
-
   this.setup = function () {
     var self = this;
 
     // Setting up autocomplete search bar
-    this.fetchCompanies(function () {
-      var source = $.map (self.companies, function (c) {
+    this.fetchCompanies(function (data) {
+      var source = $.map (data, function (c) {
         return c.symbol  + " - " + c.company;
       });
 
       $('#search').typeahead({source: source});
     }); 
 
-    this.companyDetail("AAPL");
+    this.companyDetail("AMZN");
   };
 
 
   this.companyDetail = function (companySymbol) {
     var self = this;
-    this.fetchQuotes (companySymbol, "lasts", function (data) {
+
+    // Updating company Header
+    this.fetchCompanies(companySymbol, function (data) {
+      var c = data[0];
+      console.log (c);
+
+      $("#company-details h1").text(c.company + ' (' + c.symbol + ')');
+      $("#company-details .quote").text(c.last_close);
+      $("#company-details .sector").text(c.sector);
+      $("#company-details .place").text(c.place);
+      $("#company-details .date").text(moment(c.last_trade).format('MMM Do'));
+
+      // Updating company performance
+      $("#company-details .performance").removeClass("good");
+      $("#company-details .performance").removeClass("bad");
+      c.perf = (Math.floor(parseFloat(((c.last_close / c.last_open) - 1) * 10000)) / 100);
+      c.diff = Math.floor((c.last_close - c.last_open) * 100) / 100;
+
+      if (c.perf >= 0) 
+        $("#company-details .performance").addClass("good");
+      else 
+        $("#company-details .performance").addClass("bad");
+
+      $("#company-details .performance").text(Math.abs(c.diff) + ' (' + Math.abs(c.perf) + '%)');
+    });
+
+    // Updating Overall Graph
+    this.fetchQuotes(companySymbol, function (data) {
+      var quotes = self.companyDetail_parseQuotes(data);
+      var polyjsdata = polyjs.data(quotes.polyData);
+
+      var specOverallChart = {
+        layers: [{
+          data: polyjsdata,
+          type: 'line',
+          x: 'Date',
+          y: 'Close',
+          size: {'const': 2}
+        },
+        {
+          data: polyjsdata,
+          type: 'area',
+          x: 'Date',
+          y: 'Close',
+          size: {'const': 2},
+          opacity: {'const': 0.2}
+        }],
+        guides: {
+          x: {
+            title: "",
+            renderGrid: true
+          },
+          y: {
+            title: "",
+            renderGrid: true,
+            min: quotes.minimumClose - ((quotes.maximumClose - quotes.minimumClose) / 5),
+            max: quotes.maximumClose + ((quotes.maximumClose - quotes.minimumClose) / 5)
+          }
+        },
+        dom: 'overall-chart',
+        width: 940,
+        height: 200,
+        paddingTop: -35,
+        paddingLeft: -10
+      };
+
+      $("#overall-chart svg").remove();
+      var overallChart = polyjs.chart(specOverallChart);
+      $("#overall-chart .loader").remove();
+    });
+
+    // Updating date range performance
+    this.fetchQuotes(companySymbol, "lasts", function (data) {
       var quotes = self.companyDetail_parseQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
 
       var specCloseChart = {
+        title: companySymbol,
         layers: [{
           data: polyjsdata,
           type: 'line',
@@ -62,10 +133,12 @@ var App = function () {
         dom: 'close-chart',
         width: 300,
         height: 200,
-        paddingTop: -30
+        paddingTop: -30,
+        paddingLeft: -10
       };
 
       var specVolumeChart = {
+        title: "Volume",
         layers: [{
           data: polyjsdata,
           tooltip: "",
@@ -84,24 +157,20 @@ var App = function () {
         dom: 'volume-chart',
         width: 300,
         height: 200,
-        paddingTop: -30
+        paddingTop: -30,
+        paddingLeft: -10
       };
+
+      $("#close-chart svg").remove();
+      $("#volume-chart svg").remove();
 
       var closeChart = polyjs.chart(specCloseChart);
       var volumeChart = polyjs.chart(specVolumeChart);
+
       $("#close-chart .loader").remove();
       $("#volume-chart .loader").remove();
     });
-  };
 
-
-  this.fetchCompanies = function (callback) {
-    var self = this;
-    // Drawing graph
-    $.getJSON('api/symbols.php', function (data) {
-      self.companies = data;
-      if (callback != undefined) callback(data);
-    });
 
     // Pane
     var pickers = {
@@ -111,6 +180,23 @@ var App = function () {
     $('#date-picker').datetimepicker(pickers);
     $('#from-picker').datetimepicker(pickers);
     $('#to-picker').datetimepicker(pickers);
+  };
+
+
+  this.fetchCompanies = function (symbol, callback) {
+    // Searching for all symbols
+    if (typeof symbol === 'function') {
+      cb = symbol;
+
+      $.getJSON('api/symbols.php', cb);
+    }
+    // Searching for only one symbol
+    else {
+      cb = callback;
+
+      $.getJSON('api/symbols.php?symbol=' + symbol, cb); 
+    }
+
   };
 
   this.fetchQuotes = function (symbol, from, to, cb) {
@@ -175,4 +261,5 @@ var App = function () {
   this.setup();
 }
 
-$(document).ready (new App());
+var app = new App();
+$(document).ready (app);
