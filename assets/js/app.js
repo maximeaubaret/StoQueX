@@ -57,8 +57,8 @@ var App = function () {
 
     // Updating Overall Graph
     $("#overall-chart svg").remove();
-    this.fetchQuotes(companySymbol, function (data) {
-      var quotes = self.companyDetail_parseQuotes(data);
+    this.fetchQuotes(companySymbol, 'average', function (data) {
+      var quotes = self.companyDetail_parseAverageQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
 
       var specOverallChart = {
@@ -211,9 +211,15 @@ var App = function () {
       url += '&from=' + from + '&to=' + to;
       callback = cb;
     }
-    // Searching for a date
+    // Searching for a date or an average
     else if (typeof to === 'function') {
-      url += '&date=' + from;
+      if (from == 'average') {
+        url += '&average';
+      }
+      else {
+        url += '&date=' + from;
+      }
+
       callback = to;
     }
     // Searching for all quotes
@@ -255,6 +261,40 @@ var App = function () {
         r.polyData['Volume'].push(q.volume);
         r.polyData['Close'].push(q.close);
         r.polyData['Performance'].push(Math.floor(parseFloat(((q.close / q.open) - 1) * 10000)) / 100);
+      });
+    }
+
+    return r;
+  };
+
+  this.companyDetail_parseAverageQuotes = function (data) {
+    var r = {
+      polyData: {
+        'Date': [],
+        'Close': [],
+        'High': [],
+        'Low': [],
+        'Open': [],
+        'Volume': []
+      },
+      minimumClose: null,
+      maximumClose: null
+    };
+
+    if (data.length > 0) {
+      r.minimumClose = r.maximumClose = data[0].average_close;
+      $.each (data, function (key, q) {
+        if (q.average_close > r.maximumClose) r.maximumClose = parseFloat(q.average_close);
+        if (q.average_close < r.minimumClose) r.minimumClose = parseFloat(q.average_close);
+
+        if (q.month < 10) q.month = '0' + q.month;
+
+        r.polyData['Date'].push(q.year + '-' + q.month + '-01');
+        r.polyData['Open'].push(q.average_open);
+        r.polyData['High'].push(q.average_high);
+        r.polyData['Low'].push(q.average_low);
+        r.polyData['Volume'].push(q.average_volume);
+        r.polyData['Close'].push(q.average_close);
       });
     }
 

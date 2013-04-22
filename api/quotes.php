@@ -42,10 +42,12 @@ if (isset($_GET['from']) && isset($_GET['to'])) {
   $to = $_GET['to'];
 }
 
-
 // Prepare SQL Statement
 
-if (isset($date) && $date == "lasts") {
+if (isset($_GET['average'])) {
+  $stmt = $db->prepare('SELECT symbol, EXTRACT(MONTH FROM date) AS MONTH, EXTRACT(YEAR FROM date) AS YEAR, avg(open) "average_open", avg(high) "average_high", avg(low) "average_low", avg(CLOSE) "average_close", avg(volume) "average_volume" FROM quotes WHERE symbol = :symbol GROUP BY YEAR, MONTH, symbol ORDER BY YEAR, MONTH;');
+}
+elseif (isset($date) && $date == "lasts") {
   $stmt = $db->prepare('SELECT * FROM Quotes WHERE Symbol = :symbol ORDER BY Date DESC LIMIT 60');
 }
 elseif (isset($date)) {
