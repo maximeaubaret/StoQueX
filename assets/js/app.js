@@ -61,6 +61,8 @@ var App = function () {
       var quotes = self.companyDetail_parseAverageQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
 
+      console.log (quotes);
+
       var specOverallChart = {
         layers: [{
           data: polyjsdata,
@@ -249,7 +251,7 @@ var App = function () {
     };
 
     if (data.length > 0) {
-      r.minimumClose = r.maximumClose = data[0].close;
+      r.minimumClose = r.maximumClose = parseFloat(data[0].close);
       $.each (data, function (key, q) {
         if (q.close > r.maximumClose) r.maximumClose = parseFloat(q.close);
         if (q.close < r.minimumClose) r.minimumClose = parseFloat(q.close);
@@ -282,7 +284,7 @@ var App = function () {
     };
 
     if (data.length > 0) {
-      r.minimumClose = r.maximumClose = data[0].average_close;
+      r.minimumClose = r.maximumClose = parseFloat(data[0].average_close);
       $.each (data, function (key, q) {
         if (q.average_close > r.maximumClose) r.maximumClose = parseFloat(q.average_close);
         if (q.average_close < r.minimumClose) r.minimumClose = parseFloat(q.average_close);
