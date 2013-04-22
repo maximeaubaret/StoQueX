@@ -7,11 +7,11 @@ if (isset($_GET['symbol'])) {
 }
 
 if (isset($symbol)) {
-  $stmt = $db->prepare("SELECT * FROM Symbols AS s JOIN (SELECT DATE AS 'last_trade', OPEN AS 'last_open', high AS 'last_high', low AS 'last_low', CLOSE AS 'last_close', volume AS 'last_volume' FROM Quotes WHERE symbol = :symbol ORDER BY DATE DESC LIMIT 1) AS q WHERE s.symbol = :symbol;"); 
+  $stmt = $db->prepare('SELECT s.symbol, s.place, s.company, s.sector, q.open "last_open", q.high "last_high", q.low "last_low", q.close "last_close", q.volume "last_volume" FROM Symbols s JOIN Quotes q ON s.symbol = q.symbol WHERE s.symbol = :symbol ORDER BY q.date DESC LIMIT 1;');
   $stmt->bindParam(':symbol', $symbol);
 }
 else {
-  $stmt = $db->prepare('SELECT * FROM Symbols AS s JOIN (SELECT symbol FROM Quotes GROUP BY symbol) AS q ON s.symbol = q.symbol');
+  $stmt = $db->prepare('SELECT * FROM symbols AS s JOIN (SELECT symbol FROM quotes GROUP BY symbol) AS q ON s.symbol = q.symbol');
 }
 
 try {
