@@ -1,5 +1,12 @@
-Projet Web
+StoQuEx
 ===========
+
+Demo
+----
+A version of StoQuEx is running on : http://pg217.herokuapp.com/
+
+Only AAPL, MSFT, and GOOG are available.
+
 
 Directory Structure
 -------------------
