@@ -17,6 +17,11 @@ var App = function () {
       });
 
       $('#search').typeahead({source: source});
+      $('form.search').submit(function (e) {
+        e.preventDefault();
+
+        self.companyDetail($("#search").val());
+      });
     }); 
 
     this.companyDetail("AMZN");
@@ -29,7 +34,6 @@ var App = function () {
     // Updating company Header
     this.fetchCompanies(companySymbol, function (data) {
       var c = data[0];
-      console.log (c);
 
       $("#company-details h1").text(c.company + ' (' + c.symbol + ')');
       $("#company-details .quote").text(c.last_close);
@@ -52,6 +56,7 @@ var App = function () {
     });
 
     // Updating Overall Graph
+    $("#overall-chart svg").remove();
     this.fetchQuotes(companySymbol, function (data) {
       var quotes = self.companyDetail_parseQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
@@ -85,18 +90,19 @@ var App = function () {
           }
         },
         dom: 'overall-chart',
-        width: 940,
-        height: 200,
+        width: 620,
+        height: 250,
         paddingTop: -35,
         paddingLeft: -10
       };
 
-      $("#overall-chart svg").remove();
       var overallChart = polyjs.chart(specOverallChart);
       $("#overall-chart .loader").remove();
     });
 
     // Updating date range performance
+    $("#close-chart svg").remove();
+    $("#volume-chart svg").remove();
     this.fetchQuotes(companySymbol, "lasts", function (data) {
       var quotes = self.companyDetail_parseQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
@@ -161,8 +167,6 @@ var App = function () {
         paddingLeft: -10
       };
 
-      $("#close-chart svg").remove();
-      $("#volume-chart svg").remove();
 
       var closeChart = polyjs.chart(specCloseChart);
       var volumeChart = polyjs.chart(specVolumeChart);
