@@ -24,7 +24,7 @@ var App = function () {
       });
     }); 
 
-    this.companyDetail("AMZN");
+    this.companyDetail("AAPL");
   };
 
 
