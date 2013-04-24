@@ -22,7 +22,7 @@ var App = function () {
 
         self.companyDetail($("#search").val());
       });
-    }); 
+    });
 
     this.companyDetail("AAPL");
   };
@@ -47,9 +47,9 @@ var App = function () {
       c.perf = (Math.floor(parseFloat(((c.last_close / c.last_open) - 1) * 10000)) / 100);
       c.diff = Math.floor((c.last_close - c.last_open) * 100) / 100;
 
-      if (c.perf >= 0) 
+      if (c.perf >= 0)
         $("#company-details .performance").addClass("good");
-      else 
+      else
         $("#company-details .performance").addClass("bad");
 
       $("#company-details .performance").text(Math.abs(c.diff) + ' (' + Math.abs(c.perf) + '%)');
@@ -159,7 +159,7 @@ var App = function () {
             title: ""
           },
           y: {
-            title: "",
+            title: ""
           }
         },
         dom: 'volume-chart',
@@ -182,7 +182,8 @@ var App = function () {
     var pickers = {
       language: 'us',
       pickTime: false
-    }
+    };
+
     $('#date-picker').datetimepicker(pickers);
     $('#from-picker').datetimepicker(pickers);
     $('#to-picker').datetimepicker(pickers);
@@ -200,7 +201,7 @@ var App = function () {
     else {
       cb = callback;
 
-      $.getJSON('api/symbols.php?symbol=' + symbol, cb); 
+      $.getJSON('api/symbols.php?symbol=' + symbol, cb);
     }
 
   };
@@ -240,11 +241,9 @@ var App = function () {
         'Performance': [],
         'Open': [],
         'Close': [],
-        'Open': [],
         'High': [],
         'Low': [],
-        'Volume': [],
-        'Close': []
+        'Volume': []
       },
       minimumClose: null,
       maximumClose: null
@@ -305,7 +304,7 @@ var App = function () {
 
 
   this.setup();
-}
+};
 
 var app = new App();
 $(document).ready (app);
