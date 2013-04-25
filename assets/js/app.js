@@ -16,10 +16,11 @@ var App = function () {
         return c.symbol  + " - " + c.company;
       });
 
-      $('#search').typeahead({source: source});
-      $('form.search').submit(function (e) {
-        e.preventDefault();
+      $.each (data, function (i, c) {
+        $("#search").append("<option value='" + c.symbol + "'>" + c.company + " - " + c.symbol + "</option>");
+      });
 
+      $(".chzn-select").chosen().change(function () {
         self.companyDetail($("#search").val());
       });
     });
