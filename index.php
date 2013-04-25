@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link href="assets/css/chosen.css" rel="stylesheet" media="screen">
 <style>
 body {
   padding-top: 60px;
@@ -430,6 +431,7 @@ form.search {
 <script src="assets/js/raphael-min.js"></script>
 <script src="assets/js/polychart2.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
+<script src="assets/js/chosen.jquery.min.js"></script>
 <script src="assets/js/helper.js"></script>
 <script src="assets/js/app.js"></script>
 </body>

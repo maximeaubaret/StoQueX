@@ -61,8 +61,6 @@ var App = function () {
       var quotes = self.companyDetail_parseAverageQuotes(data);
       var polyjsdata = polyjs.data(quotes.polyData);
 
-      console.log (quotes);
-
       var specOverallChart = {
         layers: [{
           data: polyjsdata,
