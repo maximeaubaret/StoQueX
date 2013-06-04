@@ -313,7 +313,7 @@ form.search {
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                 </span>
-                <input data-format="yyyy-mm-dd" type="text" placeholder="Date..."/>
+                <input data-format="yyyy-MM-dd" type="text" placeholder="Date..."/>
               </div>
               <button class="btn btn-small">Update</button>
             </fieldset>
@@ -368,13 +368,13 @@ form.search {
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                 </span>
-                <input data-format="yyyy-mm-dd" type="text" placeholder="From date..."/>
+                <input data-format="yyyy-MM-dd" type="text" placeholder="From date..."/>
               </div>
               <div id="to-picker" class="input-prepend">
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
                 </span>
-                <input data-format="yyyy-mm-dd" type="text" placeholder="To date..."/>
+                <input data-format="yyyy-MM-dd" type="text" placeholder="To date..."/>
               </div>
               <button class="btn btn-small">Update</button>
             </fieldset>

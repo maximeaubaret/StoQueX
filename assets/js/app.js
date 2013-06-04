@@ -12,10 +12,6 @@ var App = function () {
 
     // Setting up autocomplete search bar
     this.fetchCompanies(function (data) {
-      var source = $.map (data, function (c) {
-        return c.symbol  + " - " + c.company;
-      });
-
       $.each (data, function (i, c) {
         $("#search").append("<option value='" + c.symbol + "'>" + c.company + " - " + c.symbol + "</option>");
       });
