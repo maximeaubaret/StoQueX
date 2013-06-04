@@ -324,7 +324,7 @@ form.search {
             <tbody>
             <tr>
               <td class="name">Performance</td>
-              <td class="value quote-performance">+213%</td>
+              <td class="value quote-performance">+214%</td>
             </tr>
             <tr>
               <td class="name">Open</td>
