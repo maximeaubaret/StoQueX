@@ -272,29 +272,11 @@ form.search {
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="span8">
+      <div class="row" id="performance">
+        <div class="span12">
           <div id="overall-chart"> 
             <div class="loader" style="height: 250px;"></div>
           </div>
-        </div>
-        <div class="span4">
-          <table class="table table-bordered">
-            <tbody>
-            <tr>
-              <td class="name">First day</td>
-              <td class="value quote-performance">2000-01-03</td>
-            </tr>
-            <tr>
-              <td class="name">Last day</td>
-              <td class="value quote-open">2013-04-5</td>
-            </tr>
-            <tr>
-              <td class="name">Close</td>
-              <td class="value quote-close">210.8</td>                
-            </tr>
-            </tbody>
-          </table> 
         </div>
       </div>
       <div class="row">
@@ -304,7 +286,7 @@ form.search {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" id="performance-day">
         <div class="span4">
           <form action="#">
             <fieldset>
@@ -359,7 +341,7 @@ form.search {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" id="performance-date-range">
         <div class="span4">
           <form action="#">
             <fieldset>

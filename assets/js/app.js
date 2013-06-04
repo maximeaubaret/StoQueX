@@ -9,7 +9,7 @@
 var App = function () {
   this.setup = function () {
     var self = this;
-
+		
     // Setting up autocomplete search bar
     this.fetchCompanies(function (data) {
       $.each (data, function (i, c) {
@@ -32,12 +32,17 @@ var App = function () {
     this.fetchCompanies(companySymbol, function (data) {
       var c = data[0];
 
-      $("#company-details h1").text(c.company + ' (' + c.symbol + ')');
-      $("#company-details .quote").text(c.last_close);
-      $("#company-details .sector").text(c.sector);
-      $("#company-details .place").text(c.place);
-      $("#company-details .date").text(moment(c.last_trade).format('MMM Do'));
-
+      $("#company-details .company-header h1").text(c.company + ' (' + c.symbol + ')');
+      $("#company-details .company-header .quote").text(c.last_close);
+      $("#company-details .company-header .sector").text(c.sector);
+      $("#company-details .company-header .place").text(c.place);
+      $("#company-details .company-header .date").text(moment(c.last_trade).format('MMM Do'));
+	  
+	  $("#company-details #performance .quote-first-day").text(c.first_date);
+	  $("#company-details #performance .quote-last-day").text(c.last_trade);
+	  $("#company-details #performance .quote-close").text(c.last_close);
+	  
+	  
       // Updating company performance
       $("#company-details .performance").removeClass("good");
       $("#company-details .performance").removeClass("bad");
@@ -51,6 +56,8 @@ var App = function () {
 
       $("#company-details .performance").text(Math.abs(c.diff) + ' (' + Math.abs(c.perf) + '%)');
     });
+
+	
 
     // Updating Overall Graph
     $("#overall-chart svg").remove();
@@ -87,7 +94,7 @@ var App = function () {
           }
         },
         dom: 'overall-chart',
-        width: 620,
+        width: 940,
         height: 250,
         paddingTop: -35,
         paddingLeft: -10
