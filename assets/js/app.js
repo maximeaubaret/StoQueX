@@ -38,11 +38,6 @@ var App = function () {
       $("#company-details .company-header .place").text(c.place);
       $("#company-details .company-header .date").text(moment(c.last_trade).format('MMM Do'));
 	  
-	  $("#company-details #performance .quote-first-day").text(c.first_date);
-	  $("#company-details #performance .quote-last-day").text(c.last_trade);
-	  $("#company-details #performance .quote-close").text(c.last_close);
-	  
-	  
       // Updating company performance
       $("#company-details .performance").removeClass("good");
       $("#company-details .performance").removeClass("bad");
