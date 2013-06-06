@@ -1,0 +1,108 @@
+body {
+  padding-top: 60px;
+}
+
+.navbar-logo {
+  height: 40px;
+
+  margin-left: -35px;
+  padding-left: 35px;
+
+  background: url(assets/img/logo.png) no-repeat;
+  background-position: left center;
+  background-size: 30px;
+}
+
+.navbar-logo:hover {
+  background: url(assets/img/logo-black.png) no-repeat;
+  background-position: left center;
+  background-size: 30px;
+}
+
+.navbar-logo:hover a {
+  color: black;
+}
+
+form.search {
+  margin: 0px;
+  padding: 0px;
+}
+
+#search {
+  -moz-transition:width 500ms, height 500ms, background-color 500ms, -moz-transform 500ms;
+  -webkit-transition:width 500ms, height 500ms, background-color 500ms, -webkit-transform 500ms;
+  -o-transition:width 500ms, height 500ms, background-color 500ms, -o-transform 500ms;
+  transition:width 500ms, height 500ms, background-color 500ms, transform 500ms;
+}
+
+#search:focus {
+  width: 200px;
+}
+
+.company-header {
+  border-top: solid 2px rgb(200,200,200);
+  border-bottom: solid 2px rgb(200,200,200);
+  margin-top: 5px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.company-header h1 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 20px;
+}
+
+.company-header .quote {
+  font-size: 34px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.company-header .performance {
+  font-size: 22px;
+  margin-right: 5px;
+}
+
+.company-header .bad {
+  color: red;
+  background: url(assets/img/arrow-red.png) no-repeat;
+  padding-left: 20px;
+  background-size: 20px;
+  background-position: center left;
+}
+
+.company-header .good {
+  color: green;
+  background: url(assets/img/arrow-green.png) no-repeat;
+  padding-left: 20px;
+  background-size: 20px;
+  background-position: center left;
+}
+
+.company-header .date {
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.section-header {
+  border-bottom: solid 2px gray;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.table .name{
+  color: rgb(150,150,150);
+  background: rgb(249,249,249);
+}
+
+.table .value {
+  font-weight: bold;
+}
+
+.loader {
+  background: url(assets/img/ajax-loader.gif) no-repeat;
+  background-position: center center;
+}
