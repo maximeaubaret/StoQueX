@@ -8,13 +8,13 @@ body {
   margin-left: -35px;
   padding-left: 35px;
 
-  background: url(assets/img/logo.png) no-repeat;
+  background: url(../img/logo.png) no-repeat;
   background-position: left center;
   background-size: 30px;
 }
 
 .navbar-logo:hover {
-  background: url(assets/img/logo-black.png) no-repeat;
+  background: url(../img/logo-black.png) no-repeat;
   background-position: left center;
   background-size: 30px;
 }
@@ -105,4 +105,12 @@ form.search {
 .loader {
   background: url(assets/img/ajax-loader.gif) no-repeat;
   background-position: center center;
+}
+
+.copyright {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #a0a0a0;
 }

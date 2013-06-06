@@ -24,7 +24,9 @@ var App = function () {
     this.companyDetail("AAPL");
   };
 
+  /** Palmares Page **/
 
+  /** Company Detail Page **/
   this.companyDetail = function (companySymbol) {
     var self = this;
 
@@ -32,27 +34,25 @@ var App = function () {
     this.fetchCompanies(companySymbol, function (data) {
       var c = data[0];
 
-      $("#company-details .company-header h1").text(c.company + ' (' + c.symbol + ')');
-      $("#company-details .company-header .quote").text(c.last_close);
-      $("#company-details .company-header .sector").text(c.sector);
-      $("#company-details .company-header .place").text(c.place);
-      $("#company-details .company-header .date").text(moment(c.last_trade).format('MMM Do'));
+      $("#company-header h1").text(c.company + ' (' + c.symbol + ')');
+      $("#company-header .quote").text(c.last_close);
+      $("#company-header .sector").text(c.sector);
+      $("#company-header .place").text(c.place);
+      $("#company-header .date").text(moment(c.last_trade).format('MMM Do'));
 	  
       // Updating company performance
-      $("#company-details .performance").removeClass("good");
-      $("#company-details .performance").removeClass("bad");
+      $("#company-header .performance").removeClass("good");
+      $("#company-header .performance").removeClass("bad");
       c.perf = (Math.floor(parseFloat(((c.last_close / c.last_open) - 1) * 10000)) / 100);
       c.diff = Math.floor((c.last_close - c.last_open) * 100) / 100;
 
       if (c.perf >= 0)
-        $("#company-details .performance").addClass("good");
+        $("#company-header .performance").addClass("good");
       else
-        $("#company-details .performance").addClass("bad");
+        $("#company-header .performance").addClass("bad");
 
-      $("#company-details .performance").text(Math.abs(c.diff) + ' (' + Math.abs(c.perf) + '%)');
+      $("#company-header .performance").text(Math.abs(c.diff) + ' (' + Math.abs(c.perf) + '%)');
     });
-
-	
 
     // Updating Overall Graph
     $("#overall-chart svg").remove();

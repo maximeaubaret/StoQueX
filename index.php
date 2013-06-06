@@ -22,28 +22,33 @@
       </div>
       <div class="container">
         <ul class="nav">
-          <li class="active"><a href="#palmares" data-toggle="tab">Palmares</a></li>
-          <li class=""><a href="#company-details" data-toggle="tab">Company details</a></li>
+          <li class=""><a href="#palmares" data-toggle="tab">Palmares</a></li>
+          <li class="active"><a href="#company-details" data-toggle="tab">Company details</a></li>
         </ul>
         <div class="input-append navbar-search pull-right"> 
           <select id="search" data-placeholder="Choose a company" class="chzn-select"></select>
-        </form>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Pages -->
 <div class="container">
   <div class="tab-content">
+
+
     <!-- Palmares -->
     <div class="tab-pane" id="palmares">
       <div class="page-header">
         <h1>Palmares</h1>
       </div>
+
       <div class="row">
+        <!-- Green -->
         <div class="span4">
           <h2>Green</h2>
+
           <table class="table">
             <thead>
               <tr>
@@ -71,8 +76,12 @@
             </tbody>
           </table>
         </div>
+        <!-- END: Green -->
+
+        <!-- Red -->
         <div class="span4">
           <h2>Red</h2>
+
           <table class="table">
             <thead>
               <tr>
@@ -100,8 +109,12 @@
             </tbody>
           </table>
         </div>
+        <!-- END: Red -->
+
+        <!-- Volume -->
         <div class="span4">
           <h2>Volume</h2>
+
           <table class="table">
             <thead>
               <tr>
@@ -129,168 +142,206 @@
             </tbody>
           </table>
         </div>
+        <!-- END: Volume -->
       </div>
     </div>
+    <!-- END: Palmares -->
 
-    <!-- Company Details -->
+
+
+    <!-- Company details -->
     <div class="tab-pane active" id="company-details">
-      <div class="row">
-        <div class="span12">
-          <div class="company-header">
-            <h1>Apple Inc. (AAPL)</h1>
-            <span class="quote">390.53</span>
-            <span class="performance good">1.52 (0.39%)</span>
-            <span class="date">Apr. 15</span>
-            <span class="muted">
-              - <span class="place">NASDAQ</span>
-              - <span class="sector">Consumer Discretionary</span>
-            </span>
+
+      <!-- Company Header -->
+      <div id="company-header">
+        <div class="row">
+          <div class="span12">
+            <div class="company-header">
+              <h1>Apple Inc. (AAPL)</h1>
+              <span class="quote">390.53</span>
+              <span class="performance good">1.52 (0.39%)</span>
+              <span class="date">Apr. 15</span>
+              <span class="muted">
+                - <span class="place">NASDAQ</span>
+                - <span class="sector">Consumer Discretionary</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="span12"> 
-          <div class="section-header">
-            Overall performance
+      <!-- END: Company Header -->
+
+
+      <!-- Overall Performance -->
+      <div id="overall-performance">
+        <div class="row">
+          <div class="span12"> 
+            <div class="section-header">
+              Overall performance
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span12">
+            <div id="overall-chart">
+              <div class="loader" style="height: 250px;"></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row" id="performance">
-        <div class="span12">
-          <div id="overall-chart"> 
-            <div class="loader" style="height: 250px;"></div>
+      <!-- END: Overall Performance -->
+
+
+      <!-- Performance on a day -->
+      <div id="day-performance">
+        <div class="row">
+          <div class="span12"> 
+            <div class="section-header">
+              Performance on a day
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span4">
+            <form action="#">
+              <fieldset>
+                <label>Select a date:</label>
+                <div id="date-picker" class="input-prepend">
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
+                  </span>
+                  <input data-format="yyyy-MM-dd" type="text" placeholder="Date..."/>
+                </div>
+                <button class="btn btn-small">Update</button>
+              </fieldset>
+            </form>
+          </div>
+          <div class="span4">
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <td class="name">Performance</td>
+                <td class="value quote-performance">+214%</td>
+              </tr>
+              <tr>
+                <td class="name">Open</td>
+                <td class="value quote-open">200.4</td>
+              </tr>
+              <tr>
+                <td class="name">Close</td>
+                <td class="value quote-close">210.8</td>                
+              </tr>
+              </tbody>
+            </table> 
+          </div>
+          <div class="span4">
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <td class="name">Range</td>
+                <td class="value quote-high">210.8 - 984.24</td>
+              </tr>
+              <tr>
+                <td class="name">Volume</td>
+                <td class="value quote-volume">4,018,204</td>                
+              </tr>
+              </tbody>
+            </table> 
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="span12"> 
-          <div class="section-header">
-            Performance on a day
+      <!-- END: Performance on a day -->
+
+      <!-- Performance on a date range -->
+      <div id="date-range-performance">
+        <div class="row">
+          <div class="span12">
+            <div class="section-header">
+              Performance during a date range
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="span4">
+            <form action="#">
+              <fieldset>
+                <label>Select a date range:</label>
+                <div id="from-picker" class="input-prepend">
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
+                  </span>
+                  <input data-format="yyyy-MM-dd" type="text" placeholder="From date..."/>
+                </div>
+                <div id="to-picker" class="input-prepend">
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
+                  </span>
+                  <input data-format="yyyy-MM-dd" type="text" placeholder="To date..."/>
+                </div>
+                <button class="btn btn-small">Update</button>
+              </fieldset>
+            </form>
+          </div>
+          <div class="span4">
+            <div id="close-chart">
+              <div class="loader" style="height: 200px;"></div>
+            </div>
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <td class="name">Performance</td>
+                <td class="value quote-performance">+213%</td>
+              </tr>
+              <tr>
+                <td class="name">Number of green days</td>
+                <td class="value quote-open">200</td>
+              </tr>
+              <tr>
+                <td class="name">Number of red days</td>
+                <td class="value quote-close">148</td>                
+              </tr>
+              </tbody>
+            </table> 
+          </div>
+          <div class="span4">
+            <div id="volume-chart">
+              <div class="loader" style="height: 200px;"></div>
+            </div>
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <td class="name">Range</td>
+                <td class="value quote-high">210.8 - 984.24</td>
+              </tr>
+              <tr>
+                <td class="name">First Company</td>
+                <td class="value quote-high">12</td>                
+              </tr>
+              <tr>
+                <td class="name">Last Company</td>
+                <td class="value quote-low">4</td>                
+              </tr>
+              </tbody>
+            </table> 
           </div>
         </div>
       </div>
-      <div class="row" id="performance-day">
-        <div class="span4">
-          <form action="#">
-            <fieldset>
-              <label>Select a date:</label>
-              <div id="date-picker" class="input-prepend">
-                <span class="add-on">
-                  <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
-                </span>
-                <input data-format="yyyy-MM-dd" type="text" placeholder="Date..."/>
-              </div>
-              <button class="btn btn-small">Update</button>
-            </fieldset>
-          </form>
-        </div>
-        <div class="span4">
-          <table class="table table-bordered">
-            <tbody>
-            <tr>
-              <td class="name">Performance</td>
-              <td class="value quote-performance">+214%</td>
-            </tr>
-            <tr>
-              <td class="name">Open</td>
-              <td class="value quote-open">200.4</td>
-            </tr>
-            <tr>
-              <td class="name">Close</td>
-              <td class="value quote-close">210.8</td>                
-            </tr>
-            </tbody>
-          </table> 
-        </div>
-        <div class="span4">
-          <table class="table table-bordered">
-            <tbody>
-            <tr>
-              <td class="name">Range</td>
-              <td class="value quote-high">210.8 - 984.24</td>
-            </tr>
-            <tr>
-              <td class="name">Volume</td>
-              <td class="value quote-volume">4,018,204</td>                
-            </tr>
-            </tbody>
-          </table> 
-        </div>
-      </div>
-      <div class="row">
-        <div class="span12">
-          <div class="section-header">
-            Performance during a date range
-          </div>
-        </div>
-      </div>
-      <div class="row" id="performance-date-range">
-        <div class="span4">
-          <form action="#">
-            <fieldset>
-              <label>Select a date range:</label>
-              <div id="from-picker" class="input-prepend">
-                <span class="add-on">
-                  <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
-                </span>
-                <input data-format="yyyy-MM-dd" type="text" placeholder="From date..."/>
-              </div>
-              <div id="to-picker" class="input-prepend">
-                <span class="add-on">
-                  <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>
-                </span>
-                <input data-format="yyyy-MM-dd" type="text" placeholder="To date..."/>
-              </div>
-              <button class="btn btn-small">Update</button>
-            </fieldset>
-          </form>
-        </div>
-        <div class="span4">
-          <div id="close-chart">
-            <div class="loader" style="height: 200px;"></div>
-          </div>
-          <table class="table table-bordered">
-            <tbody>
-            <tr>
-              <td class="name">Performance</td>
-              <td class="value quote-performance">+213%</td>
-            </tr>
-            <tr>
-              <td class="name">Number of green days</td>
-              <td class="value quote-open">200</td>
-            </tr>
-            <tr>
-              <td class="name">Number of red days</td>
-              <td class="value quote-close">148</td>                
-            </tr>
-            </tbody>
-          </table> 
-        </div>
-        <div class="span4">
-          <div id="volume-chart">
-            <div class="loader" style="height: 200px;"></div>
-          </div>
-          <table class="table table-bordered">
-            <tbody>
-            <tr>
-              <td class="name">Range</td>
-              <td class="value quote-high">210.8 - 984.24</td>
-            </tr>
-            <tr>
-              <td class="name">First Company</td>
-              <td class="value quote-high">12</td>                
-            </tr>
-            <tr>
-              <td class="name">Last Company</td>
-              <td class="value quote-low">4</td>                
-            </tr>
-            </tbody>
-          </table> 
-        </div>
-      </div>
+      <!-- END: Performance on a date range -->
+
     </div>
+    <!-- END: Company details -->
+  </div>
+
+  <div class="container">
+    <p class="copyright">
+      A production Aubaret Maxime &amp; Toni Alexandre
+    </p>
   </div>
 </div>
+
 
 <!-- Bootstrap -->
 <script src="assets/js/jquery.min.js"></script>
