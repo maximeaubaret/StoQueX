@@ -26,15 +26,7 @@
           <li class=""><a href="#company-details" data-toggle="tab">Company details</a></li>
         </ul>
         <div class="input-append navbar-search pull-right"> 
-          <select id="search" data-placeholder="Choose a company" class="chzn-select">
-          </select>
-          <!--
-          <form class='search' action='#'>
-            <input class="span2" id="search" type="text" placeholder="Find a company..." autocomplete="off"/> 
-            <div class="btn">
-              <i class="icon-search">&nbsp;</i>
-            </div>
-          -->
+          <select id="search" data-placeholder="Choose a company" class="chzn-select"></select>
         </form>
         </div>
       </div>
