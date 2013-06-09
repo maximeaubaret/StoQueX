@@ -55,7 +55,7 @@ elseif (isset($date)) {
   $stmt->bindParam(':date', $date);
 }
 elseif (isset($from) && isset($to)) {
-  $stmt = $db->prepare('SELECT * FROM quotes WHERE symbol = :symbol and date >= :from && date <= :to ORDER BY date');
+  $stmt = $db->prepare('SELECT * FROM quotes WHERE symbol = :symbol and date >= :from and date <= :to ORDER BY date');
   $stmt->bindParam(':from', $from);
   $stmt->bindParam(':to', $to);
 }
