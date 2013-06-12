@@ -577,15 +577,17 @@ var DateRangePerformance = function (dom, symbol) {
       var fromTmp = $(dom).find(".from-picker input").val();
       var toTmp = $(dom).find(".to-picker input").val();
 
-      from = fromTmp;
-      to = toTmp;
-      if (moment(fromTmp, "YYYY-MM-DD").unix() > moment(toTmp, "YYYY-MM-DD").unix()) {
-        from = toTmp;
-        to = fromTmp;
-      }
+      if (fromTmp != "" && toTmp != "") {
+        from = fromTmp;
+        to = toTmp;
+        if (moment(fromTmp, "YYYY-MM-DD").unix() > moment(toTmp, "YYYY-MM-DD").unix()) {
+          from = toTmp;
+          to = fromTmp;
+        }
 
-      
-      self.update();
+
+        self.update();
+      }
     });
 
     closeChart = new QuoteChart ({
