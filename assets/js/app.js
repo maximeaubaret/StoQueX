@@ -48,6 +48,15 @@ var Model = {
 
     $.getJSON(url, callback);
   },
+  sp: function (from, to, cb) {
+    var url = 'api/sp500.php?';
+
+    // Searching for a date range
+    url += '&from=' + from + '&to=' + to;
+    callback = cb;
+
+    $.getJSON(url, callback);
+  },
   lastQuote: function (cb) {
     var url = 'api/lastquote.php';
     $.getJSON(url, cb);
@@ -118,6 +127,31 @@ var Model = {
 
     return r;
   },
+  parseSP: function (data) {
+    var r = {
+      polyData: {
+        'Date': [],
+        'Close': [],
+        'Volume': []
+      },
+      minimumClose: null,
+      maximumClose: null
+    };
+
+    if (data.length > 0) {
+      r.minimumClose = r.maximumClose = parseFloat(data[0].close);
+      $.each (data, function (key, q) {
+        if (q.close > r.maximumClose) r.maximumClose = parseFloat(q.close);
+        if (q.close < r.minimumClose) r.minimumClose = parseFloat(q.close);
+
+        r.polyData['Date'].push(q.date);
+        r.polyData['Volume'].push(q.volume);
+        r.polyData['Close'].push(q.close);
+      });
+    }
+
+    return r;
+  },
   firstlast: function (symbol, from, to, cb) {
     var url = 'api/quotes2.php?from=' + from + '&to=' + to + '&symbol=' + symbol;
     $.getJSON(url, cb);
@@ -163,6 +197,57 @@ var QuoteChart = function (options) {
           renderGrid: true,
           min: quotes.minimumClose - ((quotes.maximumClose - quotes.minimumClose) / 5),
           max: quotes.maximumClose + ((quotes.maximumClose - quotes.minimumClose) / 5)
+        }
+      },
+      dom: options.dom,
+      width: options.width,
+      height: options.height,
+      paddingTop: -30,
+      paddingLeft: -10
+    };
+
+    $(options.dom).find("svg").remove();
+    polyjs.chart(spec);
+  };
+};
+
+var SPChart = function (options) {
+  var options = options || {
+    dom: '',
+    title: '',
+    width: 320,
+    height: 320
+  };
+
+  this.render = function (data) {
+    var quotes = Model.parseSP(data);
+    var polyjsdata = polyjs.data(quotes.polyData);
+
+    var spec = {
+      title: options.title,
+      layers: [{
+        data: polyjsdata,
+        type: 'line',
+        x: 'Date',
+        y: 'Close',
+        size: {'const': 2}
+      },
+      {
+        data: polyjsdata,
+        type: 'area',
+        x: 'Date',
+        y: 'Close',
+        size: {'const': 2},
+        opacity: {'const': 0.2}
+      }],
+      guides: {
+        x: {
+          title: "",
+          renderGrid: true
+        },
+        y: {
+          title: "",
+          renderGrid: true
         }
       },
       dom: options.dom,
@@ -991,6 +1076,110 @@ var Palmares = function (dom) {
 };
 
 
+var SP = function (dom) {
+  var from = "2000-01-01";
+  var to = moment().format("YYYY-MM-DD");
+
+  var self = this;
+
+  this.setup = function () {
+
+    this.update();
+  };
+
+  this.update = function () {
+    self.render();
+
+    var pickers = {
+      language: 'us',
+      pickTime: false
+    };
+
+    picker = $(dom).find('.from-picker').datetimepicker(pickers);
+    picker = $(dom).find('.to-picker').datetimepicker(pickers);
+
+    $(dom).find("button").click (function (e) {
+      e.preventDefault();
+
+      var fromTmp = $(dom).find(".from-picker input").val();
+      var toTmp = $(dom).find(".to-picker input").val();
+
+      if (fromTmp != "" && toTmp != "") {
+        from = fromTmp;
+        to = toTmp;
+        if (moment(fromTmp, "YYYY-MM-DD").unix() > moment(toTmp, "YYYY-MM-DD").unix()) {
+          from = toTmp;
+          to = fromTmp;
+        }
+
+        self.update();
+      }
+    });
+
+    if ($(dom).find(".from-picker input").val() != "" &&
+        $(dom).find(".to-picker input").val() != "") {
+    Model.sp(from, to, function (data) {
+      $(dom).find(".loader").hide();
+      $(dom).find(".chart").hide();
+      self.renderGraph(data);
+    });
+    }
+  };
+
+  this.render = function () {
+    var html = "";
+
+    html += '<div class="row">';
+    html += '  <div class="span3">';
+    html += '    <div class="header">';
+    html += '      S&amp;P 500';
+    html += '      <p>';
+    html += '        The S&amp;P 500, or the Standard &amp; Poor\'s 500, is a stock market index based on the market capitalizations of 500 leading companies publicly traded in the U.S. stock market, as determined by Standard &amp; Poor\'s';
+    html += '      </p>';
+    html += '    </div>';
+    html += '    <form action="#">';
+    html += '      <fieldset>';
+    html += '        <label style="font-size: 14px">Select a date:</label>';
+    html += '        <div class="from-picker input-prepend">';
+    html += '          <span class="add-on">';
+    html += '            <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>';
+    html += '          </span>';
+    html += '          <input style="width: 100px" data-format="yyyy-MM-dd" type="text" placeholder="From..." value="' + from + '"/>';
+    html += '        </div>';
+    html += '        <div class="to-picker input-prepend">';
+    html += '          <span class="add-on">';
+    html += '            <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>';
+    html += '          </span>';
+    html += '          <input style="width: 100px" data-format="yyyy-MM-dd" type="text" placeholder="To..." value="' + to + '"/>';
+    html += '        </div>';
+    html += '        <button class="btn btn-small">Update</button>';
+    html += '      </fieldset>';
+    html += '    </form>';
+    html += '  </div>';
+    html += '  <div class="span9">';
+    html += '    <div class="loader" style="height: 250px"></div>';
+    html += '    <div class="chart"></div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $(dom).html(html);
+  };
+
+  this.renderGraph = function (data) {
+    chart = new SPChart ({
+      dom: $(dom).find(".chart")[0],
+      width: 700,
+      height: 250
+    });
+
+    chart.render (data);
+    $(dom).find(".chart").fadeIn(500);
+  };
+
+  this.setup ();
+};
+
+
 var App = function () {
   this.setup = function () {
     var self = this;
@@ -1013,6 +1202,10 @@ var App = function () {
 
     $("a[href='#company-details']").click(function () {
       self.companyDetail(self.symbol);
+    });
+
+    $("a[href='#sp']").click(function () {
+      self.sp();
     });
 
     this.palmares();
@@ -1043,8 +1236,6 @@ var App = function () {
 
     // Updating date range performance
     new DateRangePerformance ($("#date-range-performance")[0], companySymbol, self.companyDetailRedCarpet); 
-
-
   };
 
   this.companyDetailRedCarpet = function (self, name) {
@@ -1063,6 +1254,10 @@ var App = function () {
       });
     }
   }
+
+  this.sp = function () {
+    new SP($("#sp")[0]);
+  };
 
 
   this.fetchCompanies = function (symbol, callback) {

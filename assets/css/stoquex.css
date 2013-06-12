@@ -125,23 +125,22 @@ form.search {
   margin-top: 3px;
 }
 
-#palmares {
+#palmares, #sp {
   border-top: solid 2px gray;
   padding-top: 10px;
 }
 
-#palmares .header {
+.header {
   font-weight: bold;
   font-size: 18px;
   padding-bottom: 5px;
 }
 
-#palmares .subheader {
+.subheader {
   padding-bottom: 10px;
 }
 
-
-#palmares .header p {
+.header p {
   font-size: 12px;
   font-weight: normal;
   color: #333;
@@ -198,4 +197,8 @@ form.search {
 .small-date {
   width: 120px;
   font-size: 12px;
+}
+
+#sp .chart {
+  margin-top: 50px;
 }

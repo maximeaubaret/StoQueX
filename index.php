@@ -24,6 +24,7 @@
         <ul class="nav">
           <li class="active"><a href="#palmares" data-toggle="tab">Palmares</a></li>
           <li class=""><a href="#company-details" data-toggle="tab">Company details</a></li>
+          <li class=""><a href="#sp" data-toggle="tab">S&P500</a></li>
         </ul>
         <div id="search-container" class="input-append navbar-search pull-right hide"> 
           <select id="search" data-placeholder="Choose a company" class="chzn-select hide"></select>
@@ -59,7 +60,12 @@
 
     </div>
     <!-- END: Company details -->
+
+    <!-- SP -->
+    <div class="tab-pane" id="sp">
+    </div>
   </div>
+
 
   <div class="container">
     <p class="copyright">
