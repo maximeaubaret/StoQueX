@@ -5,7 +5,17 @@ $symbol = $_GET['symbol'];
 $from = $_GET['from'];
 $to = $_GET['to'];
 
-$stmt1 = $db->prepare('SELECT COUNT(1) AS first FROM quotes AS A JOIN (SELECT DATE, MAX(CLOSE) AS CLOSE FROM quotes GROUP BY DATE) AS B ON A.date = B.date AND A.close = B.close WHERE symbol=:symbol AND A.date BETWEEN :from AND :to');
+$req1 = "
+  SELECT COUNT(1) AS first 
+  FROM quotes AS A 
+  JOIN (
+    SELECT DATE, MAX(CLOSE) AS CLOSE 
+    FROM quotes GROUP BY DATE
+  ) AS B ON A.date = B.date AND A.close = B.close 
+  WHERE symbol=:symbol AND A.date BETWEEN :from AND :to
+";
+
+$stmt1 = $db->prepare($req1);
 $stmt1->bindParam(':symbol', $symbol);
 $stmt1->bindParam(':from', $from);
 $stmt1->bindParam(':to', $to);

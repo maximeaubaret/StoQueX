@@ -14,7 +14,7 @@ function green($date) {
     FROM quotes
     WHERE date = :date
     ORDER BY perf DESC
-    LIMIT 5
+    LIMIT 15
     ";
 
   $stmt = $db->prepare($req);
@@ -36,7 +36,7 @@ function red($date) {
     FROM quotes
     WHERE date = :date
     ORDER BY perf ASC 
-    LIMIT 5
+    LIMIT 15
     ";
 
   $stmt = $db->prepare($req);
@@ -59,7 +59,7 @@ function volume($date) {
     FROM quotes
     WHERE date = :date
     ORDER BY volume DESC 
-    LIMIT 5
+    LIMIT 15
     ";
 
   $stmt = $db->prepare($req);

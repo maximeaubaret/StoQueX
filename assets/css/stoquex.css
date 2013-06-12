@@ -40,11 +40,9 @@ form.search {
 }
 
 .company-header {
-  border-top: solid 2px rgb(200,200,200);
-  border-bottom: solid 2px rgb(200,200,200);
+  border-top: solid 2px gray;
   margin-top: 5px;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  padding-top: 5px;
 }
 
 .company-header h1 {
@@ -86,11 +84,13 @@ form.search {
 }
 
 .section-header {
-  border-bottom: solid 2px gray;
+  border-top: solid 2px gray;
   margin-top: 15px;
   margin-bottom: 15px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 15px;
   font-weight: bold;
+  font-size: 18px;
 }
 
 .table .name{
@@ -123,4 +123,79 @@ form.search {
 }
 #search_chzn {
   margin-top: 3px;
+}
+
+#palmares {
+  border-top: solid 2px gray;
+  padding-top: 10px;
+}
+
+#palmares .header {
+  font-weight: bold;
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+#palmares .subheader {
+  padding-bottom: 10px;
+}
+
+
+#palmares .header p {
+  font-size: 12px;
+  font-weight: normal;
+  color: #333;
+  padding-top: 5px;
+}
+
+.palmares-table {
+  margin: 0px;
+  margin-top: -10px;
+  padding: 0px;
+  line-height: 12px;
+  font-size: 12px;
+}
+.palmares-table th {
+  font-size: 11px;
+  font-weight: normal;
+  color: #aaaaaa;
+}
+
+
+.palmares-table td, .palmares-table th {
+  padding: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.palmares-table td.company-name {
+  font-weight: bold;
+}
+
+.palmares-table .close-value {
+  text-align: center;
+}
+
+.palmares-table .perf {
+  text-align: right;
+}
+
+.palmares-table tr:hover {
+  background: #f6f6f6;
+  cursor: pointer;
+
+  color: #505050;
+}
+
+.palmares-table tr:active{
+  background: #eeeeee;
+  cursor: pointer;
+}
+
+
+.small-date {
+  width: 120px;
+  font-size: 12px;
 }

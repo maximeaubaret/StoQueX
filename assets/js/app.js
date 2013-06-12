@@ -18,6 +18,10 @@ var Model = {
       $.getJSON('api/symbols.php?symbol=' + symbol, cb);
     }
   },
+  palmares: function (date, cb) {
+    var url = 'api/palmares.php?date=' + date;
+    $.getJSON(url, cb);
+  },
   quotes: function (symbol, from, to, cb) {
     var url = 'api/quotes.php?symbol=' + symbol;
 
@@ -43,6 +47,10 @@ var Model = {
     }
 
     $.getJSON(url, callback);
+  },
+  lastQuote: function (cb) {
+    var url = 'api/lastquote.php';
+    $.getJSON(url, cb);
   },
   parseQuotes: function (data) {
     var r = {
@@ -109,6 +117,10 @@ var Model = {
     }
 
     return r;
+  },
+  firstlast: function (symbol, from, to, cb) {
+    var url = 'api/quotes2.php?from=' + from + '&to=' + to + '&symbol=' + symbol;
+    $.getJSON(url, cb);
   }
 };
 
@@ -188,9 +200,11 @@ var VolumeChart = function (options) {
       }],
       guides: {
         x: {
+          renderGrid: true,
           title: ""
         },
         y: {
+          renderGrid: true,
           title: ""
         }
       },
@@ -242,9 +256,8 @@ var AverageQuoteChart = function (options) {
         },
         y: {
           title: "",
-          renderGrid: true,
-          min: quotes.minimumClose - ((quotes.maximumClose - quotes.minimumClose) / 5),
-          max: quotes.maximumClose + ((quotes.maximumClose - quotes.minimumClose) / 5)
+          min: 0,
+          renderGrid: true
         }
       },
       dom: options.dom,
@@ -260,6 +273,8 @@ var AverageQuoteChart = function (options) {
 };
 
 var CompanyHeader = function (master, dom, symbol, redcarpet) {
+  var self = this;
+
   this.setup = function () {
     this.renderA();
 
@@ -281,36 +296,64 @@ var CompanyHeader = function (master, dom, symbol, redcarpet) {
   }
 
   this.renderB = function (data) {
-    data = data[0];
 
-    data.perf = (Math.floor(parseFloat(((data.last_close / data.last_open) - 1) * 10000)) / 100);
-    data.diff = Math.floor((data.last_close - data.last_open) * 100) / 100;
+    if (data.length == 0) {
+      Model.quotes(symbol, "lasts", function (data2) {
+        self.renderB([{
+          'symbol': data2[0].symbol,
+          'last_close': data2[0].close,
+          'last_high': data2[0].high,
+          'last_low': data2[0].low,
+          'last_open': data2[0].open,
+          'last_volume': data2[0].volume,
+          'place': '',
+          'sector': '',
+          'company': ''
+        }]);
+      });
+    }
+    else {
+      data = data[0];
 
-    var html = "";
+      data.perf = (Math.floor(parseFloat(((data.last_close / data.last_open) - 1) * 10000)) / 100);
+      data.diff = Math.floor((data.last_close - data.last_open) * 100) / 100;
 
-    html += '<div class="row">';
-    html += '  <div class="span12">';
-    html += '    <div class="company-header" style="height:70px">';
-    html += '      <h1>' + data.company + ' (' + data.symbol + ')</h1>';
-    html += '      <span class="quote">' + data.last_close +'</span>';
+      var html = "";
 
-    if (data.diff > 0)
-      html += '      <span class="performance good">' + Math.abs(data.diff) + ' (' + Math.abs(data.perf) + '%)</span>';
-    else
-      html += '      <span class="performance bad">' + Math.abs(data.diff) + ' (' + Math.abs(data.perf) + '%)</span>';
+      html += '<div class="row">';
+      html += '  <div class="span12">';
+      html += '    <div class="company-header" style="height:70px">';
 
-    html += '      <span class="date">' + moment(data.last_trade).format('MMM Do') + '</span>';
-    html += '      <span class="muted">';
-    html += '        - <span class="place">' + data.place + '</span>';
-    html += '        - <span class="sector">' + data.sector + '</span>';
-    html += '      </span>';
-    html += '    </div>';
-    html += '  </div>';
-    html += '</div>';
+      if (data.company != "")
+        html += '      <h1>' + data.company + ' (' + data.symbol + ')</h1>';
+      else
+        html += '      <h1>' + data.symbol + '</h1>';
 
-    $(dom).html(html);
 
-    redcarpet(master, 'header');
+      html += '      <span class="quote">' + parseFloat(data.last_close).toFixed(2) +'</span>';
+
+      if (data.diff > 0)
+        html += '      <span class="performance good">' + Math.abs(data.diff) + ' (' + Math.abs(data.perf) + '%)</span>';
+      else
+        html += '      <span class="performance bad">' + Math.abs(data.diff) + ' (' + Math.abs(data.perf) + '%)</span>';
+
+      html += '      <span class="date">' + moment(data.last_trade).format('MMM Do') + '</span>';
+
+      if (data.place != '' && date.sector != '') {
+        html += '      <span class="muted">';
+        html += '        - <span class="place">' + data.place + '</span>';
+        html += '        - <span class="sector">' + data.sector + '</span>';
+        html += '      </span>';
+      }
+
+      html += '    </div>';
+      html += '  </div>';
+      html += '</div>';
+
+      $(dom).html(html);
+
+      redcarpet(master, 'header');
+    }
   }
 
   this.setup ();
@@ -613,59 +656,61 @@ var DateRangePerformance = function (dom, symbol) {
         $(dom).find(".to-picker input").val() != "") {
       $(dom).find(".data-loader").fadeIn();
       Model.quotes (symbol, from, to, function (data) {
-        $(dom).find(".data-loader").hide();
+        Model.firstlast (symbol, from, to, function (firstlast) {
+          $(dom).find(".data-loader").hide();
 
-        $(dom).find(".data").fadeIn();
-        if (data.length > 0) {
-          data.reverse();
+          $(dom).find(".data").fadeIn();
+          if (data.length > 0) {
+            data.reverse();
 
-          green = $.map (data, function (e) {
-            if (e.close > e.open)
-              return e;
-          });
+            green = $.map (data, function (e) {
+              if (e.close > e.open)
+                return e;
+            });
 
-          red = $.map (data, function (e) {
-            if (e.close <= e.open)
-              return e;
-          });
+            red = $.map (data, function (e) {
+              if (e.close <= e.open)
+                return e;
+            });
 
-          min = data[0].low;
-          for (var i = 1; i < data.length; i++) {
-            if (data[i].low < min) min = data[i].low;
+            min = data[0].low;
+            for (var i = 1; i < data.length; i++) {
+              if (data[i].low < min) min = data[i].low;
+            }
+
+            max = data[0].high;
+            for (var i = 1; i < data.length; i++) {
+              if (data[i].high > max) max = data[i].high;
+            }
+
+            perf = (Math.floor(parseFloat(((data[data.length - 1].close / data[0].open) - 1) * 10000)) / 100) + " %";
+
+            $(dom).find('.quote-performance').text(perf);
+            $(dom).find('.quote-green-days').text(green.length);
+            $(dom).find('.quote-red-days').text(red.length);
+            $(dom).find('.quote-range').text(min + " - " + max);
+            $(dom).find('.quote-first').text(firstlast.first);
+            $(dom).find('.quote-last').text(firstlast.last);
+
+
+            self.renderCharts(data);
           }
+          else {
+            $(dom).find(".close-chart .loader").remove();
+            $(dom).find(".volume-chart .loader").remove();
 
-          max = data[0].high;
-          for (var i = 1; i < data.length; i++) {
-            if (data[i].high > max) max = data[i].high;
+            $(dom).find(".close-chart .nodata").fadeIn();
+            $(dom).find(".volume-chart .nodata").fadeIn();
+
+
+            $(dom).find('.quote-performance').text("N/A");
+            $(dom).find('.quote-green-days').text("N/A");
+            $(dom).find('.quote-red-days').text("N/A");
+            $(dom).find('.quote-range').text("N/A");
+            $(dom).find('.quote-first').text("N/A");
+            $(dom).find('.quote-last').text("N/A");
           }
-
-          perf = (Math.floor(parseFloat(((data[data.length - 1].close / data[0].open) - 1) * 10000)) / 100) + " %";
-
-          $(dom).find('.quote-performance').text(perf);
-          $(dom).find('.quote-green-days').text(green.length);
-          $(dom).find('.quote-red-days').text(red.length);
-          $(dom).find('.quote-range').text(min + " - " + max);
-          $(dom).find('.quote-first').text("first");
-          $(dom).find('.quote-last').text("last");
-
-
-          self.renderCharts(data);
-        }
-        else {
-          $(dom).find(".close-chart .loader").remove();
-          $(dom).find(".volume-chart .loader").remove();
-
-          $(dom).find(".close-chart .nodata").fadeIn();
-          $(dom).find(".volume-chart .nodata").fadeIn();
-
-
-          $(dom).find('.quote-performance').text("N/A");
-          $(dom).find('.quote-green-days').text("N/A");
-          $(dom).find('.quote-red-days').text("N/A");
-          $(dom).find('.quote-range').text("N/A");
-          $(dom).find('.quote-first').text("N/A");
-          $(dom).find('.quote-last').text("N/A");
-        }
+        });
       });
     }
   }
@@ -779,10 +824,178 @@ var DateRangePerformance = function (dom, symbol) {
 };
 
 
-var App = function () {
+var RankPerfTable = function (dom) {
+  this.render = function (data) {
+    var html = "";
 
+    html += '<table class="table palmares-table">';
+    html += '  <thead>';
+    html += '    <tr>';
+    html += '      <th class="company-name">Company</th>';
+    html += '      <th class="close-value">Closing value</th>';
+    html += '      <th class="perf">Performance</th>';
+    html += '    </tr>';
+    html += '  </thead>';
+    html += '  <tbody>';
+
+    $.each (data, function (i, e) {
+      html += '  <tr onclick="javascript:detail(\'' + e.symbol + '\')">';
+      html += '    <td class="company-name">' + e.symbol + '</td>';
+      html += '    <td class="close-value">' + e.close + '</td>';
+      html += '    <td class="perf">' + parseFloat(e.perf).toFixed(2) + '%</td>';
+      html += '  </tr>';
+    });
+
+
+    html += '  </tbody>';
+    html += '</table>';
+
+    $(dom).html(html);
+  };
+};
+
+var RankVolumeTable = function (dom) {
+  this.render = function (data) {
+    var html = "";
+
+    html += '<table class="table palmares-table">';
+    html += '  <thead>';
+    html += '    <tr>';
+    html += '      <th class="company-name">Company</th>';
+    html += '      <th class="close-value">Closing value</th>';
+    html += '      <th class="perf">Volume</th>';
+    html += '    </tr>';
+    html += '  </thead>';
+    html += '  <tbody>';
+
+    $.each (data, function (i, e) {
+      html += '  <tr onclick="javascript:detail(\'' + e.symbol + '\')">';
+      html += '    <td class="company-name">' + e.symbol + '</td>';
+      html += '    <td class="close-value">' + e.close + '</td>';
+      html += '    <td class="perf">' + addCommas(e.volume) + '</td>';
+      html += '  </tr>';
+    });
+
+
+    html += '  </tbody>';
+    html += '</table>';
+
+    $(dom).html(html);
+  };
+};
+
+var Palmares = function (dom) {
   this.setup = function () {
     var self = this;
+
+    self.date = "";
+
+    Model.lastQuote (function (data) {
+      self.date = data[0].date;
+
+      self.render();
+
+      var pickers = {
+        language: 'us',
+        pickTime: false
+      };
+
+      picker = $(dom).find('.date-picker').datetimepicker(pickers);
+
+      $(dom).find('button').click(function (e) {
+        e.preventDefault();
+
+        date = $(dom).find('.date-picker input').val();
+        self.update (date);
+      });
+
+      $(dom).find('button').click();
+    });
+  };
+
+  this.render = function () {
+    var html = "";
+
+    html += '<div class="row">';
+    html += '  <div class="span3">';
+    html += '    <div class="header">';
+    html += '    Palmares';
+    html += '      <p>';
+    html += '        Each day, the rankings of the best and worst companies are calculated. Select a date to view those rankings.';
+    html += '      </p>';
+    html += '    </div>';
+    html += '    <form action="#">';
+    html += '      <fieldset>';
+    html += '        <label style="font-size: 14px">Select a date:</label>';
+    html += '        <div class="date-picker input-prepend">';
+    html += '          <span class="add-on">';
+    html += '            <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>';
+    html += '          </span>';
+    html += '          <input style="width: 100px" data-format="yyyy-MM-dd" type="text" placeholder="Date..." value="' + this.date + '"/>';
+    html += '        </div>';
+    html += '        <button class="btn btn-small">Update</button>';
+    html += '      </fieldset>';
+    html += '    </form>';
+    html += '  </div>';
+    html += '  <!-- Green -->';
+    html += '  <div class="span3">';
+    html += '    <div class="subheader">';
+    html += '    In the green';
+    html += '    </div>';
+
+    html += '    <div class="green hide"></div>';
+    html += '    <div class="loader" style="height: 150px"></div>';
+    html += '  </div>';
+
+    html += '  <!-- Red -->';
+    html += '  <div class="span3">';
+    html += '    <div class="subheader">';
+    html += '      In the red';
+    html += '    </div>';
+
+    html += '    <div class="red hide"></div>';
+    html += '    <div class="loader" style="height: 150px"></div>';
+    html += '  </div>';
+
+    html += '  <!-- Volume -->';
+    html += '  <div class="span3">';
+    html += '    <div class="subheader">';
+    html += '      By volume';
+    html += '    </div>';
+
+    html += '    <div class="volume hide"></div>';
+    html += '    <div class="loader" style="height: 150px"></div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $(dom).html(html);
+  };
+
+  this.update = function (date) {
+    Model.palmares (date, function (data) {
+      new RankPerfTable($(dom).find(".green")[0]).render(data.green);
+      new RankPerfTable($(dom).find(".red")[0]).render(data.red);
+      new RankVolumeTable($(dom).find(".volume")[0]).render(data.volume);
+
+      $(dom).find(".loader").hide();
+      $(dom).find(".green").fadeIn(200, function () {
+        $(dom).find(".red").fadeIn(200, function () {
+          $(dom).find(".volume").fadeIn(200);
+        });
+      });
+    });
+  };
+
+
+  this.setup();
+};
+
+
+var App = function () {
+  this.setup = function () {
+    var self = this;
+
+    self.symbol = 'AAPL';
 		
     // Setting up autocomplete search bar
     this.fetchCompanies(function (data) {
@@ -791,17 +1004,24 @@ var App = function () {
       });
 
       $(".chzn-select").chosen().change(function () {
+        self.symbol = $("#search").val();
         $("a[href='#company-details']").click();
-        self.companyDetail($("#search").val());
       });
 
       $("#search-container").fadeIn();
     });
 
-    this.companyDetail("AAPL");
+    $("a[href='#company-details']").click(function () {
+      self.companyDetail(self.symbol);
+    });
+
+    this.palmares();
   };
 
   /** Palmares Page **/
+  this.palmares = function () {
+    new Palmares ($("#palmares")[0]);
+  };
 
   /** Company Detail Page **/
   this.companyDetail = function (companySymbol) {
@@ -809,6 +1029,7 @@ var App = function () {
 
     self.companyDetailRedCarpetData = 2;
 
+    $("#company-details .pane-loader").show();
     $(".copyright").hide();
 
     // Updating company Header
@@ -829,6 +1050,8 @@ var App = function () {
   this.companyDetailRedCarpet = function (self, name) {
     self.companyDetailRedCarpetData--;
     if (self.companyDetailRedCarpetData == 0) {
+      $("#company-details .pane-loader").hide();
+
       $("#company-header").fadeIn(500, function () {
         $("#overall-performance").fadeIn(500, function () {
           $("#day-performance").fadeIn(500, function () {
@@ -955,6 +1178,11 @@ var App = function () {
 
 
   this.setup();
+};
+
+var detail = function (symbol) {
+  app.symbol = symbol;
+  $("a[href='#company-details']").click();
 };
 
 var app = new App();

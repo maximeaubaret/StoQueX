@@ -37,120 +37,13 @@
 <div class="container">
   <div class="tab-content">
 
-
     <!-- Palmares -->
-    <div class="tab-pane active" id="palmares">
-      <div class="page-header">
-        <h1>Palmares</h1>
-      </div>
-
-      <div class="row">
-        <!-- Green -->
-        <div class="span4">
-          <h2>Green</h2>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Ticker</th>
-                <th>Closing value</th>
-                <th>Performance</th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>ABC1</td>
-              <td>123,45</td>
-              <td>+31%</td>
-            </tr>
-            <tr>
-              <td>ABC2</td>
-              <td>123,45</td>
-              <td>+30%</td>
-            </tr>
-            <tr>
-              <td>ABC3</td>
-              <td>123,45</td>
-              <td>+29%</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- END: Green -->
-
-        <!-- Red -->
-        <div class="span4">
-          <h2>Red</h2>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Ticker</th>
-                <th>Closing value</th>
-                <th>Performance</th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>ABC1</td>
-              <td>123,45</td>
-              <td>-31%</td>
-            </tr>
-            <tr>
-              <td>ABC2</td>
-              <td>123,45</td>
-              <td>-30%</td>
-            </tr>
-            <tr>
-              <td>ABC3</td>
-              <td>123,45</td>
-              <td>-29%</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- END: Red -->
-
-        <!-- Volume -->
-        <div class="span4">
-          <h2>Volume</h2>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Ticker</th>
-                <th>Closing value</th>
-                <th>Performance</th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>ABC1</td>
-              <td>123,45</td>
-              <td>12345</td>
-            </tr>
-            <tr>
-              <td>ABC2</td>
-              <td>123,45</td>
-              <td>12345</td>
-            </tr>
-            <tr>
-              <td>ABC3</td>
-              <td>123,45</td>
-              <td>12345</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- END: Volume -->
-      </div>
-    </div>
-    <!-- END: Palmares -->
-
+    <div class="tab-pane active" id="palmares"></div>
 
 
     <!-- Company details -->
     <div class="tab-pane" id="company-details">
+      <div class="pane-loader loader hide" style="height: 300px"></div>
 
       <!-- Company Header -->
       <div id="company-header"></div>
@@ -170,7 +63,7 @@
 
   <div class="container">
     <p class="copyright">
-      A production Aubaret Maxime &amp; Toni Alexandre
+      Made with love by Aubaret Maxime &amp; Toni Alexandre
     </p>
   </div>
 </div>
