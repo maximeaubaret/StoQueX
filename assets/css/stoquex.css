@@ -114,3 +114,10 @@ form.search {
   font-size: 12px;
   color: #a0a0a0;
 }
+
+.nodata {
+  color: #aaa;
+  font-size: 20px;
+  text-align: center;
+  line-height: 200px;
+}

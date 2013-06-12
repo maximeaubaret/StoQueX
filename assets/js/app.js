@@ -607,39 +607,58 @@ var DateRangePerformance = function (dom, symbol) {
       $(dom).find(".data-loader").show();
       Model.quotes (symbol, from, to, function (data) {
         $(dom).find(".data-loader").hide();
+
         $(dom).find(".data").show();
-        data.reverse();
+        if (data.length > 0) {
+          data.reverse();
 
-        green = $.map (data, function (e) {
-          if (e.close > e.open)
-            return e;
-        });
+          green = $.map (data, function (e) {
+            if (e.close > e.open)
+              return e;
+          });
 
-        red = $.map (data, function (e) {
-          if (e.close <= e.open)
-            return e;
-        });
+          red = $.map (data, function (e) {
+            if (e.close <= e.open)
+              return e;
+          });
 
-        min = data[0].low;
-        for (var i = 1; i < data.length; i++) {
-          if (data[i].low < min) min = data[i].low;
+          min = data[0].low;
+          for (var i = 1; i < data.length; i++) {
+            if (data[i].low < min) min = data[i].low;
+          }
+
+          max = data[0].high;
+          for (var i = 1; i < data.length; i++) {
+            if (data[i].high > max) max = data[i].high;
+          }
+
+          perf = (Math.floor(parseFloat(((data[data.length - 1].close / data[0].open) - 1) * 10000)) / 100) + " %";
+
+          $(dom).find('.quote-performance').text(perf);
+          $(dom).find('.quote-green-days').text(green.length);
+          $(dom).find('.quote-red-days').text(red.length);
+          $(dom).find('.quote-range').text(min + " - " + max);
+          $(dom).find('.quote-first').text("first");
+          $(dom).find('.quote-last').text("last");
+
+
+          self.renderCharts(data);
         }
+        else {
+          $(dom).find(".close-chart .loader").remove();
+          $(dom).find(".volume-chart .loader").remove();
 
-        max = data[0].high;
-        for (var i = 1; i < data.length; i++) {
-          if (data[i].high > max) max = data[i].high;
+          $(dom).find(".close-chart .nodata").show();
+          $(dom).find(".volume-chart .nodata").show();
+
+
+          $(dom).find('.quote-performance').text("N/A");
+          $(dom).find('.quote-green-days').text("N/A");
+          $(dom).find('.quote-red-days').text("N/A");
+          $(dom).find('.quote-range').text("N/A");
+          $(dom).find('.quote-first').text("N/A");
+          $(dom).find('.quote-last').text("N/A");
         }
-
-        perf = (Math.floor(parseFloat(((data[data.length - 1].close / data[0].open) - 1) * 10000)) / 100) + " %";
-
-        $(dom).find('.quote-performance').text(perf);
-        $(dom).find('.quote-green-days').text(green.length);
-        $(dom).find('.quote-red-days').text(red.length);
-        $(dom).find('.quote-range').text(min + " - " + max);
-        $(dom).find('.quote-first').text("first");
-        $(dom).find('.quote-last').text("last");
-
-        self.renderCharts(data);
       });
     }
   }
@@ -680,6 +699,7 @@ var DateRangePerformance = function (dom, symbol) {
     html += '    <div class="span4">';
     html += '      <div class="close-chart">';
     html += '        <div class="loader" style="height: 200px;"></div>';
+    html += '        <div class="nodata hide" style="height: 200px;">N/A</div>';
     html += '      </div>';
     html += '      <table class="table table-bordered">';
     html += '        <tbody>';
@@ -701,6 +721,7 @@ var DateRangePerformance = function (dom, symbol) {
     html += '    <div class="span4">';
     html += '      <div class="volume-chart">';
     html += '        <div class="loader" style="height: 200px;"></div>';
+    html += '        <div class="nodata hide" style="height: 200px;">N/A</div>';
     html += '      </div>';
     html += '      <table class="table table-bordered">';
     html += '        <tbody>';
