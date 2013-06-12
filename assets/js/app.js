@@ -1053,7 +1053,8 @@ var Palmares = function (dom) {
     html += '  </div>';
     html += '</div>';
 
-    $(dom).html(html);
+    $(dom).find(".pane-loader").hide();
+    $(dom).html(html).hide().fadeIn(500).attr('style', '');
   };
 
   this.update = function (date) {

@@ -125,7 +125,7 @@ form.search {
   margin-top: 3px;
 }
 
-#palmares, #sp {
+#palmares .row, #sp {
   border-top: solid 2px gray;
   padding-top: 10px;
 }

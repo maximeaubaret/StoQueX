@@ -39,7 +39,9 @@
   <div class="tab-content">
 
     <!-- Palmares -->
-    <div class="tab-pane active" id="palmares"></div>
+    <div class="tab-pane active" id="palmares">
+      <div class="pane-loader loader" style="height: 300px"></div>
+    </div>
 
 
     <!-- Company details -->
