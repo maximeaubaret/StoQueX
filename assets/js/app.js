@@ -574,8 +574,16 @@ var DateRangePerformance = function (dom, symbol) {
 
     $(dom).find('button').click(function (e) {
       e.preventDefault();
-      from = $(dom).find(".from-picker input").val();
-      to = $(dom).find(".to-picker input").val();
+      var fromTmp = $(dom).find(".from-picker input").val();
+      var toTmp = $(dom).find(".to-picker input").val();
+
+      from = fromTmp;
+      to = toTmp;
+      if (moment(fromTmp, "YYYY-MM-DD").unix() > moment(toTmp, "YYYY-MM-DD").unix()) {
+        from = toTmp;
+        to = fromTmp;
+      }
+
       
       self.update();
     });
