@@ -121,3 +121,6 @@ form.search {
   text-align: center;
   line-height: 200px;
 }
+#search_chzn {
+  margin-top: 3px;
+}

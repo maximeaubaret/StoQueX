@@ -259,7 +259,7 @@ var AverageQuoteChart = function (options) {
   };
 };
 
-var CompanyHeader = function (dom, symbol) {
+var CompanyHeader = function (master, dom, symbol, redcarpet) {
   this.setup = function () {
     this.renderA();
 
@@ -277,7 +277,7 @@ var CompanyHeader = function (dom, symbol) {
     html += '  </div>';
     html += '</div>';
 
-    $(dom).html(html);
+    $(dom).html(html).hide();
   }
 
   this.renderB = function (data) {
@@ -309,12 +309,14 @@ var CompanyHeader = function (dom, symbol) {
     html += '</div>';
 
     $(dom).html(html);
+
+    redcarpet(master, 'header');
   }
 
   this.setup ();
 }
 
-var OverallPerformance = function (dom, symbol) {
+var OverallPerformance = function (master, dom, symbol, redcarpet) {
   var chart;
 
   this.setup = function () {
@@ -348,13 +350,15 @@ var OverallPerformance = function (dom, symbol) {
     html += '  </div>';
     html += '</div>';
 
-    $(dom).html(html);
+    $(dom).html(html).hide();
   }
 
   this.renderChart = function (data) {
     chart.render (data);
 
     $(dom).find(".chart .loader").remove();
+
+    redcarpet(master, 'overall');
   }
 
   this.setup();
@@ -382,10 +386,11 @@ var DayPerformance = function (dom, symbol) {
     var self = this;
 
     if ($(dom).find("input").val() != "") {
-      $(dom).find(".loader").show();
+      $(dom).find(".loader").fadeIn();
+      $(dom).find(".data").hide();
       Model.quotes (symbol, date, function (data) {
         $(dom).find(".loader").hide();
-        $(dom).find(".data").show();
+        $(dom).find(".data").fadeIn();
 
         if (data.length == 0) {
           $(dom).find('.quote-performance').text("N/A");
@@ -401,7 +406,7 @@ var DayPerformance = function (dom, symbol) {
           $(dom).find('.quote-performance').text(data.perf);
           $(dom).find('.quote-open').text(data.open);
           $(dom).find('.quote-close').text(data.close);
-          $(dom).find('.quote-volume').text(data.volume);
+          $(dom).find('.quote-volume').text(addCommas(data.volume));
           $(dom).find('.quote-range').text(data.low+ " - " + data.high);
         }
       });
@@ -471,7 +476,7 @@ var DayPerformance = function (dom, symbol) {
     html += '  </div>';
     html += '</div>';
 
-    $(dom).html(html);
+    $(dom).html(html).hide();
     
     var pickers = {
       language: 'us',
@@ -541,7 +546,7 @@ var DayPerformance = function (dom, symbol) {
     html += '  </div>';
     html += '</div>';
 
-    $(dom).html(html);
+    $(dom).html(html).hide();
     
     var pickers = {
       language: 'us',
@@ -562,6 +567,7 @@ var DayPerformance = function (dom, symbol) {
 var DateRangePerformance = function (dom, symbol) {
   var from = "";
   var to = "";
+  var firsttime = 1;
 
   this.setup = function () {
     this.update();
@@ -585,7 +591,6 @@ var DateRangePerformance = function (dom, symbol) {
           to = fromTmp;
         }
 
-
         self.update();
       }
     });
@@ -606,11 +611,11 @@ var DateRangePerformance = function (dom, symbol) {
 
     if ($(dom).find(".from-picker input").val() != "" &&
         $(dom).find(".to-picker input").val() != "") {
-      $(dom).find(".data-loader").show();
+      $(dom).find(".data-loader").fadeIn();
       Model.quotes (symbol, from, to, function (data) {
         $(dom).find(".data-loader").hide();
 
-        $(dom).find(".data").show();
+        $(dom).find(".data").fadeIn();
         if (data.length > 0) {
           data.reverse();
 
@@ -650,8 +655,8 @@ var DateRangePerformance = function (dom, symbol) {
           $(dom).find(".close-chart .loader").remove();
           $(dom).find(".volume-chart .loader").remove();
 
-          $(dom).find(".close-chart .nodata").show();
-          $(dom).find(".volume-chart .nodata").show();
+          $(dom).find(".close-chart .nodata").fadeIn();
+          $(dom).find(".volume-chart .nodata").fadeIn();
 
 
           $(dom).find('.quote-performance').text("N/A");
@@ -745,7 +750,13 @@ var DateRangePerformance = function (dom, symbol) {
     html += '  </div>';
     html += '</div>';
 
-    $(dom).html(html);
+    if (firsttime == 1) {
+      $(dom).html(html).hide();
+    }
+    else {
+      $(dom).html(html);
+    }
+    firsttime++;
     
     var pickers = {
       language: 'us',
@@ -769,6 +780,7 @@ var DateRangePerformance = function (dom, symbol) {
 
 
 var App = function () {
+
   this.setup = function () {
     var self = this;
 		
@@ -780,9 +792,10 @@ var App = function () {
 
       $(".chzn-select").chosen().change(function () {
         $("a[href='#company-details']").click();
-
         self.companyDetail($("#search").val());
       });
+
+      $("#search-container").fadeIn();
     });
 
     this.companyDetail("AAPL");
@@ -794,30 +807,39 @@ var App = function () {
   this.companyDetail = function (companySymbol) {
     var self = this;
 
+    self.companyDetailRedCarpetData = 2;
+
+    $(".copyright").hide();
+
     // Updating company Header
-    new CompanyHeader ($("#company-header")[0], companySymbol);
+    new CompanyHeader (self, $("#company-header")[0], companySymbol, self.companyDetailRedCarpet);
 
     // Updating Overall Graph
-    new OverallPerformance ($("#overall-performance")[0], companySymbol); 
+    new OverallPerformance (self, $("#overall-performance")[0], companySymbol, self.companyDetailRedCarpet); 
 
     // Updating Performance on a day
-    new DayPerformance ($("#day-performance")[0], companySymbol);
+    new DayPerformance ($("#day-performance")[0], companySymbol, self.companyDetailRedCarpet);
 
     // Updating date range performance
-    new DateRangePerformance ($("#date-range-performance")[0], companySymbol); 
-
-    // Pane
-    var pickers = {
-      language: 'us',
-      pickTime: false
-    };
+    new DateRangePerformance ($("#date-range-performance")[0], companySymbol, self.companyDetailRedCarpet); 
 
 
-    // $('#date-picker').datetimepicker(pickers);
-    // $('#day-performance button').click(function (e) {
-    //   e.preventDefault();
-    // });
   };
+
+  this.companyDetailRedCarpet = function (self, name) {
+    self.companyDetailRedCarpetData--;
+    if (self.companyDetailRedCarpetData == 0) {
+      $("#company-header").fadeIn(500, function () {
+        $("#overall-performance").fadeIn(500, function () {
+          $("#day-performance").fadeIn(500, function () {
+            $("#date-range-performance").fadeIn(500, function () {
+              $(".copyright").fadeIn(500);
+            });
+          });
+        });
+      });
+    }
+  }
 
 
   this.fetchCompanies = function (symbol, callback) {
@@ -888,7 +910,7 @@ var App = function () {
         r.polyData['Open'].push(q.open);
         r.polyData['High'].push(q.high);
         r.polyData['Low'].push(q.low);
-        r.polyData['Volume'].push(q.volume);
+        r.polyData['Volume'].push(addCommas(q.volume));
         r.polyData['Close'].push(q.close);
         r.polyData['Performance'].push(Math.floor(parseFloat(((q.close / q.open) - 1) * 10000)) / 100);
       });

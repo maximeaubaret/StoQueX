@@ -22,11 +22,11 @@
       </div>
       <div class="container">
         <ul class="nav">
-          <li class=""><a href="#palmares" data-toggle="tab">Palmares</a></li>
-          <li class="active"><a href="#company-details" data-toggle="tab">Company details</a></li>
+          <li class="active"><a href="#palmares" data-toggle="tab">Palmares</a></li>
+          <li class=""><a href="#company-details" data-toggle="tab">Company details</a></li>
         </ul>
-        <div class="input-append navbar-search pull-right"> 
-          <select id="search" data-placeholder="Choose a company" class="chzn-select"></select>
+        <div id="search-container" class="input-append navbar-search pull-right hide"> 
+          <select id="search" data-placeholder="Choose a company" class="chzn-select hide"></select>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
 
 
     <!-- Palmares -->
-    <div class="tab-pane" id="palmares">
+    <div class="tab-pane active" id="palmares">
       <div class="page-header">
         <h1>Palmares</h1>
       </div>
@@ -150,7 +150,7 @@
 
 
     <!-- Company details -->
-    <div class="tab-pane active" id="company-details">
+    <div class="tab-pane" id="company-details">
 
       <!-- Company Header -->
       <div id="company-header"></div>
