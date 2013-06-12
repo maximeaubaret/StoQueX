@@ -261,10 +261,26 @@ var AverageQuoteChart = function (options) {
 
 var CompanyHeader = function (dom, symbol) {
   this.setup = function () {
-    Model.companies (symbol, this.render);
+    this.renderA();
+
+    Model.companies (symbol, this.renderB);
   }
 
-  this.render = function (data) {
+  this.renderA = function () {
+    var html = "";
+
+    html += '<div class="row">';
+    html += '  <div class="span12">';
+    html += '    <div class="company-header">';
+    html += '       <div class="loader" style="height: 70px;"></div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $(dom).html(html);
+  }
+
+  this.renderB = function (data) {
     data = data[0];
 
     data.perf = (Math.floor(parseFloat(((data.last_close / data.last_open) - 1) * 10000)) / 100);
@@ -274,7 +290,7 @@ var CompanyHeader = function (dom, symbol) {
 
     html += '<div class="row">';
     html += '  <div class="span12">';
-    html += '    <div class="company-header">';
+    html += '    <div class="company-header" style="height:70px">';
     html += '      <h1>' + data.company + ' (' + data.symbol + ')</h1>';
     html += '      <span class="quote">' + data.last_close +'</span>';
 
@@ -345,17 +361,54 @@ var OverallPerformance = function (dom, symbol) {
 };
 
 var DayPerformance = function (dom, symbol) {
+  var date = "";
+
   this.setup = function () {
-    this.update();
+    var self = this;
+
+    self.render();
+
+    $(dom).find('button').click(function (e) {
+      e.preventDefault();
+      date = $(dom).find(".date-picker input").val();
+
+      self.update();
+    });
+
+    self.update();
   };
 
   this.update = function () {
     var self = this;
 
-    this.render();
+    if ($(dom).find("input").val() != "") {
+      $(dom).find(".loader").show();
+      Model.quotes (symbol, date, function (data) {
+        $(dom).find(".loader").hide();
+        $(dom).find(".data").show();
+
+        if (data.length == 0) {
+          $(dom).find('.quote-performance').text("N/A");
+          $(dom).find('.quote-open').text("N/A");
+          $(dom).find('.quote-close').text("N/A");
+          $(dom).find('.quote-range').text("N/A");
+          $(dom).find('.quote-volume').text("N/A");
+        }
+        else {
+          data = data[0];
+          data.perf = (Math.floor(parseFloat(((data.close / data.open) - 1) * 10000)) / 100) + " %";
+
+          $(dom).find('.quote-performance').text(data.perf);
+          $(dom).find('.quote-open').text(data.open);
+          $(dom).find('.quote-close').text(data.close);
+          $(dom).find('.quote-volume').text(data.volume);
+          $(dom).find('.quote-range').text(data.low+ " - " + data.high);
+        }
+      });
+    }
   }
 
-  this.render = function () {
+  this.render = function (data) {
     var html = "";
 
     html += '<div class="row">';
@@ -367,7 +420,7 @@ var DayPerformance = function (dom, symbol) {
     html += '</div>';
 
     html += '<div class="row">';
-    html += '  <div class="span4">';
+    html += '  <div class="span4" style="height:150px">';
     html += '    <form action="#">';
     html += '      <fieldset>';
     html += '        <label>Select a date:</label>';
@@ -375,7 +428,80 @@ var DayPerformance = function (dom, symbol) {
     html += '          <span class="add-on">';
     html += '            <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>';
     html += '          </span>';
-    html += '          <input data-format="yyyy-MM-dd" type="text" placeholder="Date..."/>';
+    html += '          <input data-format="yyyy-MM-dd" type="text" placeholder="Date..." value="' + date + '"/>';
+    html += '        </div>';
+    html += '        <button class="btn btn-small">Update</button>';
+    html += '      </fieldset>';
+    html += '    </form>';
+    html += '  </div>';
+    html += '  <div class="loader hide span8" style="height:150px;"></div>';
+    html += '  <div class="data hide">';
+    html += '    <div class="span4">';
+    html += '      <table class="table table-bordered">';
+    html += '        <tbody>';
+    html += '        <tr>';
+    html += '          <td class="name">Performance</td>';
+    html += '          <td class="value quote-performance">+214%</td>';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">Open</td>';
+    html += '          <td class="value quote-open">200.4</td>';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">Close</td>';
+    html += '          <td class="value quote-close">210.8</td>                ';
+    html += '        </tr>';
+    html += '        </tbody>';
+    html += '      </table> ';
+    html += '    </div>';
+    html += '    <div class="span4">';
+    html += '      <table class="table table-bordered">';
+    html += '        <tbody>';
+    html += '        <tr>';
+    html += '          <td class="name">Range</td>';
+    html += '          <td class="value quote-range">4,018,204</td>                ';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">Volume</td>';
+    html += '          <td class="value quote-volume">4,018,204</td>                ';
+    html += '        </tr>';
+    html += '        </tbody>';
+    html += '      </table> ';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $(dom).html(html);
+    
+    var pickers = {
+      language: 'us',
+      pickTime: false
+    };
+
+    picker = $(dom).find('.date-picker').datetimepicker(pickers);
+  };
+
+  this.renderB = function (data) {
+    var html = "";
+
+    html += '<div class="row">';
+    html += '  <div class="span12"> ';
+    html += '    <div class="section-header">';
+    html += '      Performance on a day';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    html += '<div class="row">';
+    html += '  <div class="span4" style="height: 150px">';
+    html += '    <form action="#">';
+    html += '      <fieldset>';
+    html += '        <label>Select a date:</label>';
+    html += '        <div class="date-picker input-prepend">';
+    html += '          <span class="add-on">';
+    html += '            <i data-time-icon="icon-time" data-date-icon="icon-calendar">&nbsp;</i>';
+    html += '          </span>';
+    html += '          <input data-format="yyyy-MM-dd" type="text" placeholder="Date..." value="' + date + '"/>';
     html += '        </div>';
     html += '        <button class="btn btn-small">Update</button>';
     html += '      </fieldset>';
@@ -404,7 +530,7 @@ var DayPerformance = function (dom, symbol) {
     html += '      <tbody>';
     html += '      <tr>';
     html += '        <td class="name">Range</td>';
-    html += '        <td class="value quote-high">210.8 - 984.24</td>';
+    html += '        <td class="value quote-range">4,018,204</td>                ';
     html += '      </tr>';
     html += '      <tr>';
     html += '        <td class="name">Volume</td>';
@@ -422,7 +548,7 @@ var DayPerformance = function (dom, symbol) {
       pickTime: false
     };
 
-    $(dom).find('.date-picker').datetimepicker(pickers);
+    picker = $(dom).find('.date-picker').datetimepicker(pickers);
   };
 
   this.click = function (e) {
@@ -468,12 +594,45 @@ var DateRangePerformance = function (dom, symbol) {
       height: 200
     });
 
-    if ($(dom).find(".from-picker input").val() == "" ||
-        $(dom).find(".to-picker input").val() == "") {
-      Model.quotes (symbol, "lasts", this.renderCharts);
-    }
-    else {
-      Model.quotes (symbol, from, to, this.renderCharts);
+    if ($(dom).find(".from-picker input").val() != "" &&
+        $(dom).find(".to-picker input").val() != "") {
+      $(dom).find(".data-loader").show();
+      Model.quotes (symbol, from, to, function (data) {
+        $(dom).find(".data-loader").hide();
+        $(dom).find(".data").show();
+        data.reverse();
+
+        green = $.map (data, function (e) {
+          if (e.close > e.open)
+            return e;
+        });
+
+        red = $.map (data, function (e) {
+          if (e.close <= e.open)
+            return e;
+        });
+
+        min = data[0].low;
+        for (var i = 1; i < data.length; i++) {
+          if (data[i].low < min) min = data[i].low;
+        }
+
+        max = data[0].high;
+        for (var i = 1; i < data.length; i++) {
+          if (data[i].high > max) max = data[i].high;
+        }
+
+        perf = (Math.floor(parseFloat(((data[data.length - 1].close / data[0].open) - 1) * 10000)) / 100) + " %";
+
+        $(dom).find('.quote-performance').text(perf);
+        $(dom).find('.quote-green-days').text(green.length);
+        $(dom).find('.quote-red-days').text(red.length);
+        $(dom).find('.quote-range').text(min + " - " + max);
+        $(dom).find('.quote-first').text("first");
+        $(dom).find('.quote-last').text("last");
+
+        self.renderCharts(data);
+      });
     }
   }
 
@@ -488,7 +647,7 @@ var DateRangePerformance = function (dom, symbol) {
     html += '  </div>';
     html += '</div>';
     html += '<div class="row">';
-    html += '  <div class="span4">';
+    html += '  <div class="span4" style="height: 340px">';
     html += '    <form action="#">';
     html += '      <fieldset>';
     html += '        <label>Select a date range:</label>';
@@ -508,47 +667,50 @@ var DateRangePerformance = function (dom, symbol) {
     html += '      </fieldset>';
     html += '    </form>';
     html += '  </div>';
-    html += '  <div class="span4">';
-    html += '    <div class="close-chart">';
-    html += '      <div class="loader" style="height: 200px;"></div>';
+    html += '  <div class="data-loader loader span8 hide" style="height: 250px"></div>';
+    html += '  <div class="data hide">';
+    html += '    <div class="span4">';
+    html += '      <div class="close-chart">';
+    html += '        <div class="loader" style="height: 200px;"></div>';
+    html += '      </div>';
+    html += '      <table class="table table-bordered">';
+    html += '        <tbody>';
+    html += '        <tr>';
+    html += '          <td class="name">Performance</td>';
+    html += '          <td class="value quote-performance">+213%</td>';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">Number of green days</td>';
+    html += '          <td class="value quote-green-days">200</td>';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">Number of red days</td>';
+    html += '          <td class="value quote-red-days">148</td>';
+    html += '        </tr>';
+    html += '        </tbody>';
+    html += '      </table> ';
     html += '    </div>';
-    html += '    <table class="table table-bordered">';
-    html += '      <tbody>';
-    html += '      <tr>';
-    html += '        <td class="name">Performance</td>';
-    html += '        <td class="value quote-performance">+213%</td>';
-    html += '      </tr>';
-    html += '      <tr>';
-    html += '        <td class="name">Number of green days</td>';
-    html += '        <td class="value quote-open">200</td>';
-    html += '      </tr>';
-    html += '      <tr>';
-    html += '        <td class="name">Number of red days</td>';
-    html += '        <td class="value quote-close">148</td>';
-    html += '      </tr>';
-    html += '      </tbody>';
-    html += '    </table> ';
-    html += '  </div>';
-    html += '  <div class="span4">';
-    html += '    <div class="volume-chart">';
-    html += '      <div class="loader" style="height: 200px;"></div>';
+    html += '    <div class="span4">';
+    html += '      <div class="volume-chart">';
+    html += '        <div class="loader" style="height: 200px;"></div>';
+    html += '      </div>';
+    html += '      <table class="table table-bordered">';
+    html += '        <tbody>';
+    html += '        <tr>';
+    html += '          <td class="name">Range</td>';
+    html += '          <td class="value quote-range">210.8 - 984.24</td>';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">First Company</td>';
+    html += '          <td class="value quote-first">12</td>';
+    html += '        </tr>';
+    html += '        <tr>';
+    html += '          <td class="name">Last Company</td>';
+    html += '          <td class="value quote-last">4</td>';
+    html += '        </tr>';
+    html += '        </tbody>';
+    html += '      </table> ';
     html += '    </div>';
-    html += '    <table class="table table-bordered">';
-    html += '      <tbody>';
-    html += '      <tr>';
-    html += '        <td class="name">Range</td>';
-    html += '        <td class="value quote-high">210.8 - 984.24</td>';
-    html += '      </tr>';
-    html += '      <tr>';
-    html += '        <td class="name">First Company</td>';
-    html += '        <td class="value quote-high">12</td>';
-    html += '      </tr>';
-    html += '      <tr>';
-    html += '        <td class="name">Last Company</td>';
-    html += '        <td class="value quote-low">4</td>';
-    html += '      </tr>';
-    html += '      </tbody>';
-    html += '    </table> ';
     html += '  </div>';
     html += '</div>';
 
@@ -561,7 +723,6 @@ var DateRangePerformance = function (dom, symbol) {
 
     $(dom).find('.from-picker').datetimepicker(pickers);
     $(dom).find('.to-picker').datetimepicker(pickers);
-
   };
 
   this.renderCharts = function (data) {
@@ -587,6 +748,8 @@ var App = function () {
       });
 
       $(".chzn-select").chosen().change(function () {
+        $("a[href='#company-details']").click();
+
         self.companyDetail($("#search").val());
       });
     });
