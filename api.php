@@ -17,9 +17,9 @@ require_once (PATH . '/inc/PalmaresRequest.php');
 require_once (PATH . '/inc/SymbolsRequest.php');
 
 /* Setting database with environnment config or with default values */
-$database['dsn'] = isset ($_ENV['DATABASE_DSN']) ? $database['dsn'] : "mysql:host=localhost;dbname=pg217;charset=utf8;";
-$database['uid'] = isset ($_ENV['DATABASE_UID']) ? $database['uid'] : "root";
-$database['pwd'] = isset ($_ENV['DATABASE_PWD']) ? $database['pwd'] : "root";
+$database['dsn'] = isset ($_ENV['DATABASE_DSN']) ? $_ENV['DATABASE_DSN'] : "mysql:host=localhost;dbname=pg217;charset=utf8;";
+$database['uid'] = isset ($_ENV['DATABASE_UID']) ? $_ENV['DATABASE_UID'] : "root";
+$database['pwd'] = isset ($_ENV['DATABASE_PWD']) ? $_ENV['DATABASE_PWD'] : "root";
 
 /* Setting up database */
 try {
