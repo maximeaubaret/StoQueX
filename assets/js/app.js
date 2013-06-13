@@ -1192,7 +1192,7 @@ var App = function () {
     self.symbol = 'AAPL';
 		
     // Setting up autocomplete search bar
-    this.fetchCompanies(function (data) {
+    Model.companies (function (data) {
       $.each (data, function (i, c) {
         $("#search").append("<option value='" + c.symbol + "'>" + c.company + " - " + c.symbol + "</option>");
       });
@@ -1264,122 +1264,10 @@ var App = function () {
     new SP($("#sp")[0]);
   };
 
-
-  this.fetchCompanies = function (symbol, callback) {
-    // Searching for all symbols
-    if (typeof symbol === 'function') {
-      cb = symbol;
-
-      $.getJSON('api/symbols.php', cb);
-    }
-    // Searching for only one symbol
-    else {
-      cb = callback;
-
-      $.getJSON('api/symbols.php?symbol=' + symbol, cb);
-    }
-
-  };
-
-  this.fetchQuotes = function (symbol, from, to, cb) {
-    var url = 'api/quotes.php?symbol=' + symbol;
-
-    // Searching for a date range
-    if (typeof cb === 'function') {
-      url += '&from=' + from + '&to=' + to;
-      callback = cb;
-    }
-    // Searching for a date or an average
-    else if (typeof to === 'function') {
-      if (from == 'average') {
-        url += '&average';
-      }
-      else {
-        url += '&date=' + from;
-      }
-
-      callback = to;
-    }
-    // Searching for all quotes
-    else if (typeof from === 'function')  {
-      callback = from;
-    }
-
-    $.getJSON(url, callback);
-  };
-
-  this.companyDetail_parseQuotes = function (data) {
-    var r = {
-      polyData: {
-        'Date': [],
-        'Performance': [],
-        'Open': [],
-        'Close': [],
-        'High': [],
-        'Low': [],
-        'Volume': []
-      },
-      minimumClose: null,
-      maximumClose: null
-    };
-
-    if (data.length > 0) {
-      r.minimumClose = r.maximumClose = parseFloat(data[0].close);
-      $.each (data, function (key, q) {
-        if (q.close > r.maximumClose) r.maximumClose = parseFloat(q.close);
-        if (q.close < r.minimumClose) r.minimumClose = parseFloat(q.close);
-
-        r.polyData['Date'].push(q.date);
-        r.polyData['Open'].push(q.open);
-        r.polyData['High'].push(q.high);
-        r.polyData['Low'].push(q.low);
-        r.polyData['Volume'].push(addCommas(q.volume));
-        r.polyData['Close'].push(q.close);
-        r.polyData['Performance'].push(Math.floor(parseFloat(((q.close / q.open) - 1) * 10000)) / 100);
-      });
-    }
-
-    return r;
-  };
-
-  this.companyDetail_parseAverageQuotes = function (data) {
-    var r = {
-      polyData: {
-        'Date': [],
-        'Close': [],
-        'High': [],
-        'Low': [],
-        'Open': [],
-        'Volume': []
-      },
-      minimumClose: null,
-      maximumClose: null
-    };
-
-    if (data.length > 0) {
-      r.minimumClose = r.maximumClose = parseFloat(data[0].average_close);
-      $.each (data, function (key, q) {
-        if (q.average_close > r.maximumClose) r.maximumClose = parseFloat(q.average_close);
-        if (q.average_close < r.minimumClose) r.minimumClose = parseFloat(q.average_close);
-
-        if (q.month < 10) q.month = '0' + q.month;
-
-        r.polyData['Date'].push(q.year + '-' + q.month + '-01');
-        r.polyData['Open'].push(q.average_open);
-        r.polyData['High'].push(q.average_high);
-        r.polyData['Low'].push(q.average_low);
-        r.polyData['Volume'].push(q.average_volume);
-        r.polyData['Close'].push(q.average_close);
-      });
-    }
-
-    return r;
-  };
-
-
   this.setup();
 };
 
+/* Used to quickly open the company tab, called by palmares */
 var detail = function (symbol) {
   app.symbol = symbol;
   $("a[href='#company-details']").click();
