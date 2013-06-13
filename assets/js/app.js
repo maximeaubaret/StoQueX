@@ -6,24 +6,25 @@
  * @author Alexandre Toni <alexandre@particleslab.com>
  */
 
+var MODEL_ROOT_URL = 'apis.php';
 var Model = {
   companies: function (symbol, cb) {
     // Searching for all symbols
     if (typeof symbol === 'function') {
       cb = symbol;
-      $.getJSON('api/symbols.php', cb);
+      $.getJSON(MODEL_ROOT_URL + '?q=symbols', cb);
     }
     // Searching for only one symbol
     else {
-      $.getJSON('api/symbols.php?symbol=' + symbol, cb);
+      $.getJSON(MODEL_ROOT_URL + '?q=symbols&symbol=' + symbol, cb);
     }
   },
   palmares: function (date, cb) {
-    var url = 'api/palmares.php?date=' + date;
+    var url = MODEL_ROOT_URL + '?q=palmares&date=' + date;
     $.getJSON(url, cb);
   },
   quotes: function (symbol, from, to, cb) {
-    var url = 'api/quotes.php?symbol=' + symbol;
+    var url = MODEL_ROOT_URL + '?q=quotes&symbol=' + symbol;
 
     // Searching for a date range
     if (typeof cb === 'function') {
@@ -34,6 +35,9 @@ var Model = {
     else if (typeof to === 'function') {
       if (from == 'average') {
         url += '&average';
+      }
+      else if (from == 'lasts') {
+        url += '&lasts';
       }
       else {
         url += '&date=' + from;
@@ -49,7 +53,7 @@ var Model = {
     $.getJSON(url, callback);
   },
   sp: function (from, to, cb) {
-    var url = 'api/sp500.php?';
+    var url = MODEL_ROOT_URL + '?q=quotes&sp500';
 
     // Searching for a date range
     url += '&from=' + from + '&to=' + to;
@@ -58,7 +62,7 @@ var Model = {
     $.getJSON(url, callback);
   },
   lastQuote: function (cb) {
-    var url = 'api/lastquote.php';
+    var url = MODEL_ROOT_URL + '?q=quotes&lastquote';
     $.getJSON(url, cb);
   },
   parseQuotes: function (data) {
@@ -153,7 +157,7 @@ var Model = {
     return r;
   },
   firstlast: function (symbol, from, to, cb) {
-    var url = 'api/quotes2.php?from=' + from + '&to=' + to + '&symbol=' + symbol;
+    var url = MODEL_ROOT_URL + '?q=quotes&firstlast&from=' + from + '&to=' + to + '&symbol=' + symbol;
     $.getJSON(url, cb);
   }
 };
