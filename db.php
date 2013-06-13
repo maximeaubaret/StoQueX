@@ -1,5 +1,13 @@
 <?php
-$database['dsn']        = "mysql:host=localhost;dbname=pg217;charset=utf8";
+/**
+ * StoQuEx
+ * (as seen by maubaret & atoni)
+ *
+ * @author Maxime Aubaret <maxime@particleslab.com>
+ * @author Alexandre Toni <alexandre@particleslab.com>
+ */
+
+$database['dsn']        = "mysql:host=localhost;dbname=pg217;charset=utf8;";
 $database['user']       = "root";
 $database['password']   = "root";
 

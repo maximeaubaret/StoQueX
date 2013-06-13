@@ -53,22 +53,62 @@ if (isset($_GET['from']) && isset($_GET['to'])) {
 // Prepare SQL Statement
 
 if (isset($_GET['average'])) {
-  $stmt = $db->prepare('SELECT symbol, EXTRACT(MONTH FROM date) AS month, EXTRACT(YEAR FROM date) AS year, avg(open) "average_open", avg(high) "average_high", avg(low) "average_low", avg(CLOSE) "average_close", avg(volume) "average_volume" FROM quotes WHERE symbol = :symbol GROUP BY YEAR, MONTH, symbol ORDER BY YEAR, MONTH;');
+  $stmt = $db->prepare('
+    SELECT 
+      symbol, 
+      EXTRACT(MONTH FROM date) AS month, 
+      EXTRACT(YEAR FROM date) AS year, 
+      avg(open) "average_open", 
+      avg(high) "average_high", 
+      avg(low) "average_low", 
+      avg(CLOSE) "average_close", 
+      avg(volume) "average_volume" 
+    FROM quotes 
+    WHERE symbol = :symbol 
+    GROUP BY YEAR, MONTH, symbol 
+    ORDER BY YEAR, MONTH;
+  ');
 }
 elseif (isset($date) && $date == "lasts") {
-  $stmt = $db->prepare('SELECT * FROM quotes WHERE symbol = :symbol ORDER BY date DESC LIMIT 60');
+  $stmt = $db->prepare('
+    SELECT * 
+    FROM quotes 
+    WHERE symbol = :symbol 
+    ORDER BY date DESC 
+    LIMIT 60
+  ');
 }
 elseif (isset($date)) {
-  $stmt = $db->prepare('SELECT * FROM quotes WHERE symbol = :symbol and date = :date ORDER BY date');
+  $stmt = $db->prepare('
+    SELECT * 
+    FROM quotes 
+    WHERE symbol = :symbol and date = :date 
+    ORDER BY date
+  ');
+
   $stmt->bindParam(':date', $date);
 }
 elseif (isset($from) && isset($to)) {
-  $stmt = $db->prepare('SELECT * FROM quotes WHERE symbol = :symbol and date >= :from and date <= :to ORDER BY date');
+  $stmt = $db->prepare('
+    SELECT * 
+    FROM quotes 
+    WHERE 
+      symbol = :symbol and 
+      date >= :from and 
+      date <= :to 
+    ORDER BY date
+  ');
+
   $stmt->bindParam(':from', $from);
   $stmt->bindParam(':to', $to);
 }
 else {
-  $stmt = $db->prepare('SELECT * FROM quotes WHERE symbol = :symbol ORDER BY date');
+  $stmt = $db->prepare('
+    SELECT * 
+    FROM quotes 
+    WHERE symbol = :symbol 
+    ORDER BY date
+  ');
 }
 
 try {

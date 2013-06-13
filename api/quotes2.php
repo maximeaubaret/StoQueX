@@ -29,7 +29,16 @@ $stmt1->bindParam(':from', $from);
 $stmt1->bindParam(':to', $to);
 $stmt1->execute();
 
-$stmt2 = $db->prepare('SELECT COUNT(1) AS last FROM quotes AS A JOIN (SELECT DATE, MIN(CLOSE) AS CLOSE FROM quotes GROUP BY DATE) AS B ON A.date = B.date AND A.close = B.close WHERE symbol=:symbol AND A.date BETWEEN :from AND :to');
+$stmt2 = $db->prepare('
+  SELECT COUNT(1) AS last 
+  FROM quotes AS A 
+  JOIN (
+    SELECT DATE, MIN(CLOSE) AS CLOSE 
+    FROM quotes 
+    GROUP BY DATE
+  ) AS B ON A.date = B.date AND A.close = B.close 
+  WHERE symbol=:symbol AND A.date BETWEEN :from AND :to
+');
 $stmt2->bindParam(':symbol', $symbol);
 $stmt2->bindParam(':from', $from);
 $stmt2->bindParam(':to', $to);

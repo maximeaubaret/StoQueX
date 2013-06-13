@@ -15,7 +15,22 @@ if (isset($_GET['symbol'])) {
 }
 
 if (isset($symbol)) {
-  $stmt = $db->prepare('SELECT s.symbol, s.place, s.company, s.sector, q.open "last_open", q.high "last_high", q.low "last_low", q.close "last_close", q.volume "last_volume" FROM symbols s JOIN quotes q ON s.symbol = q.symbol WHERE s.symbol = :symbol ORDER BY q.date DESC LIMIT 1;');
+  $stmt = $db->prepare('
+    SELECT 
+      s.symbol, 
+      s.place, 
+      s.company, 
+      s.sector, 
+      q.open "last_open", 
+      q.high "last_high", 
+      q.low "last_low", 
+      q.close "last_close", 
+      q.volume "last_volume" 
+    FROM symbols s 
+    JOIN quotes q ON s.symbol = q.symbol WHERE s.symbol = :symbol 
+    ORDER BY q.date DESC 
+    LIMIT 1;
+  ');
   $stmt->bindParam(':symbol', $symbol);
 }
 else {
