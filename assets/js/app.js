@@ -6,7 +6,7 @@
  * @author Alexandre Toni <alexandre@particleslab.com>
  */
 
-var MODEL_ROOT_URL = 'apis.php';
+var MODEL_ROOT_URL = 'api.php';
 var Model = {
   companies: function (symbol, cb) {
     // Searching for all symbols
