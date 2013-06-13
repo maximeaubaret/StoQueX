@@ -1,4 +1,12 @@
 <?php
+/**
+ * StoQuEx
+ * (as seen by maubaret & atoni)
+ *
+ * @author Maxime Aubaret <maxime@particleslab.com>
+ * @author Alexandre Toni <alexandre@particleslab.com>
+ */
+
 // api.php?symbol=AAPL
 // -
 // Return all the quotes for the symbol 'AAPL'
