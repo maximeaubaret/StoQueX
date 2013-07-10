@@ -1,6 +1,6 @@
 <img src="assets/img/logo-full.png" width="180px" />
 
-StoQueX stands for Stock Quotes Explorer. As it is implied, it's an app used to explore quotes from a database.
+StoQueX stands for Stock Quotes Explorer. It's an app used to explore quotes from a database.
 
 StoQueX is a school project used to learn the basic principles behined the developpment of a web app. This version of StoQueX has been built by [Maxime Aubaret](github.com/maximeaubaret) and [Alexandre Toni](github.com/kickout).
 
