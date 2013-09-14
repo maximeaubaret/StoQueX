@@ -1,12 +1,12 @@
 <img src="assets/img/logo-full.png" width="180px" />
 
-StoQueX stands for Stock Quotes Explorer. As it is implied, it's an app used to explore quotes from a database maximum storage capacity on Heroku.
+StoQueX stands for Stock Quotes Explorer. This app explores quotes from a database.
 
 StoQueX is a school project used to learn the basic principles behind the development of a web app. This version of StoQueX was built by [Maxime Aubaret](github.com/maximeaubaret) and [Alexandre Toni](github.com/kickout).
 
 Live Demo
 ---------
-To see StoQueX running live, you can go on http://pg217.herokuapp.com/. In this version, only AAPL, MSFT and GOOG are  
+To see StoQueX running live, you can go on http://pg217.herokuapp.com/. In this version, only AAPL, MSFT and GOOG are available to avoid exceeding the database maximum storage capacity on Heroku. 
 
 Database structure
 ------------------
