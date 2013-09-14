@@ -1,19 +1,19 @@
 <img src="assets/img/logo-full.png" width="180px" />
 
-StoQueX stands for Stock Quotes Explorer. As it is implied, it's an app used to explore quotes from a database.
+StoQueX stands for Stock Quotes Explorer. As it is implied, it's an app used to explore quotes from a database maximum storage capacity on Heroku.
 
-StoQueX is a school project used to learn the basic principles behined the developpment of a web app. This version of StoQueX has been built by [Maxime Aubaret](github.com/maximeaubaret) and [Alexandre Toni](github.com/kickout).
+StoQueX is a school project used to learn the basic principles behind the development of a web app. This version of StoQueX was built by [Maxime Aubaret](github.com/maximeaubaret) and [Alexandre Toni](github.com/kickout).
 
 Live Demo
 ---------
-To see StoQueX running live, you can go on http://pg217.herokuapp.com/. In this version, only AAPL, MSFT and GOOG are availabled in order to stay inside the limit of storage a database can have on Heroku.
+To see StoQueX running live, you can go on http://pg217.herokuapp.com/. In this version, only AAPL, MSFT and GOOG are  
 
 Database structure
 ------------------
-The database is composed of 2 tables : *symbols* and *quotes*.
+The database is composed of 2 tables: *symbols* and *quotes*.
 
-- *symbols* is used to associate a company symbol to its name, its sector, and where the stock is traded.
-- *quotes* is the list of quotes associated to a company on a certain date.
+- *symbols* symbolizes a company's name, business or place where the stock is traded.
+- *quotes* provides a list of quoted values at a certain date.
 
 Brought to you by
 -------
